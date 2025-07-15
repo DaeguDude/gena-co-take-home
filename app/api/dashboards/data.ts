@@ -1,0 +1,27 @@
+import { Dashboard } from "./type";
+
+const DASHBOARD_ID_PREFIX = "dashboard";
+let DASHBOARD_ID_SEQUENCE = 3;
+
+export function getNewDashboardId() {
+  DASHBOARD_ID_SEQUENCE += 1;
+  return `${DASHBOARD_ID_PREFIX}-${DASHBOARD_ID_SEQUENCE}`;
+}
+
+export const dashboards: Dashboard[] = [
+  {
+    id: getNewDashboardId(),
+    name: "일일 매출 현황판",
+    charts: ["c-s01", "c-s02", "c-p01"], // sales_chart_01, sales_chart_02, product_chart_01
+  },
+  {
+    id: getNewDashboardId(),
+    name: "마케팅 캠페인 대시보드",
+    charts: ["c-m01", "c-m02"], // marketing_chart_01, marketing_chart_02
+  },
+  {
+    id: getNewDashboardId(),
+    name: "운영 효율성 모니터링",
+    charts: ["c-o01"], // operation_chart_01
+  },
+];

@@ -1,6 +1,73 @@
 import Image from "next/image";
+import { User } from "./api/users/route";
+import { DeleteUserButton } from "./button";
+import { Dashboard } from "./api/dashboards/type";
+import { CreateDashboardButton } from "./create-dashboard";
 
-export default function Home() {
+async function getUsers(): Promise<User[]> {
+  const res = await fetch("http://localhost:3000/api/users", {
+    cache: "no-store",
+    next: {
+      tags: ["users"],
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(
+      `대시보드 데이터를 가져오는 데 실패했어: ${res.statusText}`
+    );
+  }
+
+  // 응답을 JSON으로 파싱하고 정의된 타입으로 캐스팅
+  const data: User[] = await res.json();
+  return data;
+}
+
+async function getDashboards(): Promise<Dashboard[]> {
+  const res = await fetch("http://localhost:3000/api/dashboards", {
+    cache: "no-store",
+    next: {
+      tags: ["dashboards"],
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error(
+      `대시보드 데이터를 가져오는 데 실패했어: ${res.statusText}`
+    );
+  }
+
+  // 응답을 JSON으로 파싱하고 정의된 타입으로 캐스팅
+  const data: Dashboard[] = await res.json();
+  return data;
+}
+
+async function getDashboard(id: string): Promise<Dashboard> {
+  const res = await fetch(`http://localhost:3000/api/dashboards/${id}`, {
+    cache: "no-store",
+    next: {
+      tags: [`dashboard-${id}`],
+    },
+  });
+
+  if (res.status === 404) {
+    throw new Error(`대시보드 (ID: ${id})를 찾을 수 없어.`);
+  }
+
+  if (!res.ok) {
+    throw new Error(`대시보드 (ID: ${id}) 데이터를 가져오는데 실패.`);
+  }
+
+  const data: Dashboard = await res.json();
+  return data;
+}
+// d-002
+
+export default async function Home() {
+  const users = await getUsers();
+  const dashboards = await getDashboards();
+  console.log("dashboards: ", dashboards);
+
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
@@ -12,18 +79,16 @@ export default function Home() {
           height={38}
           priority
         />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+        <div>
+          {users.map((user) => (
+            <div key={user.id} className="flex gap-8">
+              <div>{user.id}</div>
+              <div>{user.name}</div>
+              <DeleteUserButton user={user} />
+            </div>
+          ))}
+          <CreateDashboardButton />
+        </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
