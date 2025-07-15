@@ -3,6 +3,7 @@ import { User } from "./api/users/route";
 import { DeleteUserButton } from "./button";
 import { Dashboard } from "./api/dashboards/type";
 import { CreateDashboardButton } from "./create-dashboard";
+import { UpdateDashboardButton } from "./update-dashboard";
 
 async function getUsers(): Promise<User[]> {
   const res = await fetch("http://localhost:3000/api/users", {
@@ -88,6 +89,7 @@ export default async function Home() {
             </div>
           ))}
           <CreateDashboardButton />
+          <UpdateDashboardButton />
         </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">

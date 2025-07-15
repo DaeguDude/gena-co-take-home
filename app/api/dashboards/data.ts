@@ -1,7 +1,7 @@
 import { Dashboard } from "./type";
 
 const DASHBOARD_ID_PREFIX = "dashboard";
-let DASHBOARD_ID_SEQUENCE = 3;
+let DASHBOARD_ID_SEQUENCE = 0;
 
 export function getNewDashboardId() {
   DASHBOARD_ID_SEQUENCE += 1;
