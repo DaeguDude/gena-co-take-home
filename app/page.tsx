@@ -1,13 +1,16 @@
 import { Dashboard } from "./api/dashboards/type";
-import { CreateDashboardButton } from "./create-dashboard";
-import { UpdateDashboardButton } from "./update-dashboard";
-import { DeleteDashboardButton } from "./delete-dashboard";
 import { Chart } from "./api/charts/type";
-import { DeleteChartButton } from "./delete-chart-button";
 import { CreateChartButton } from "./create-chart";
+import { DashboardList } from "./components/dashboard-list";
+import { XXChart } from "./components/chart";
 
-async function getCharts(): Promise<Chart[]> {
-  const res = await fetch("http://localhost:3000/api/charts", {
+async function getCharts(ids?: string[]): Promise<Chart[]> {
+  let xxApiPath = "charts";
+  if (ids && ids.length > 0) {
+    xxApiPath += `?ids=${ids.join(",")}`;
+  }
+
+  const res = await fetch(`http://localhost:3000/api/${xxApiPath}`, {
     cache: "no-store",
     next: {
       tags: ["charts"],
@@ -85,7 +88,6 @@ async function getChart(id: string): Promise<Dashboard> {
 export default async function Home() {
   const dashboards = await getDashboards();
   const charts = await getCharts();
-  const chart = await getChart("chart-1");
 
   return (
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
@@ -94,28 +96,12 @@ export default async function Home() {
           <div className="mt-4">
             <h1 className="text-5xl">charts</h1>
             {charts.map((chart) => (
-              <div key={chart.id} className="flex gap-8">
-                <div>{chart.id}</div>
-                <div>{chart.title}</div>
-                <div>{chart.type}</div>
-                <DeleteChartButton chart={chart} />
-              </div>
+              <XXChart key={chart.id} chart={chart} />
             ))}
             <CreateChartButton />
           </div>
 
-          <div className="mt-4">
-            <h1 className="text-5xl">dashboards</h1>
-            {dashboards.map((dashboard) => (
-              <div key={dashboard.id} className="flex gap-8">
-                <div>{dashboard.id}</div>
-                <div>{dashboard.name}</div>
-                <UpdateDashboardButton dashboard={dashboard} />
-                <DeleteDashboardButton dashboard={dashboard} />
-              </div>
-            ))}
-            <CreateDashboardButton />
-          </div>
+          <DashboardList dashboards={dashboards} />
         </div>
       </main>
     </div>

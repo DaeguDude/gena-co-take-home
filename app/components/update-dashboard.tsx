@@ -1,13 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Dashboard } from "./api/dashboards/type";
 import { useState } from "react";
+import { Dashboard } from "../api/dashboards/type";
 
 export function UpdateDashboardButton({ dashboard }: { dashboard: Dashboard }) {
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState<string>("");
-  console.log("name: ", name);
   const router = useRouter();
 
   const reset = () => {

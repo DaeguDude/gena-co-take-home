@@ -2,10 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 import { charts, getNewChartId, getNewOrder } from "./data";
 import { Chart } from "./type";
 import { revalidateTag } from "next/cache";
+import { dashboards } from "../dashboards/data";
 
-export function GET() {
+export function GET(request: NextRequest) {
   try {
-    return NextResponse.json(charts);
+    const { searchParams } = new URL(request.url);
+    const idsParam = searchParams.get("ids");
+
+    let result: Chart[] = [];
+    if (idsParam) {
+      const chartIds = idsParam.split(",");
+      result = charts.filter((c) => chartIds.includes(c.id));
+    } else {
+      result = charts;
+    }
+
+    return NextResponse.json(result);
   } catch (err) {
     return NextResponse.json(
       {
@@ -46,7 +58,25 @@ export async function POST(request: NextRequest) {
     };
 
     charts.push(newChart);
+
+    const dashboardIndex = dashboards.findIndex(
+      (d) => d.id === chartForm.dashboardId
+    );
+
+    if (dashboardIndex === -1) {
+      return NextResponse.json(
+        { message: "Dashboard not found" },
+        { status: 404 }
+      );
+    }
+
+    dashboards[dashboardIndex] = {
+      ...dashboards[dashboardIndex],
+      charts: [...dashboards[dashboardIndex].charts, newChart.id],
+    };
+
     revalidateTag("charts");
+    revalidateTag("dashboards");
     return NextResponse.json(charts);
   } catch (err) {
     return NextResponse.json(
