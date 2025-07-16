@@ -2,9 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import { Dashboard } from "./api/dashboards/type";
+import { useState } from "react";
 
 export function UpdateDashboardButton({ dashboard }: { dashboard: Dashboard }) {
+  const [edit, setEdit] = useState(false);
+  const [name, setName] = useState<string>("");
+  console.log("name: ", name);
   const router = useRouter();
+
+  const reset = () => {
+    setEdit(false);
+    setName("");
+  };
 
   const handleUpdate = async () => {
     try {
@@ -15,7 +24,7 @@ export function UpdateDashboardButton({ dashboard }: { dashboard: Dashboard }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: "대시보드아이디2번" }),
+        body: JSON.stringify({ name }),
       });
 
       if (!response.ok) {
@@ -24,10 +33,26 @@ export function UpdateDashboardButton({ dashboard }: { dashboard: Dashboard }) {
       }
 
       router.refresh();
+      reset();
     } catch (err) {
       console.error("사용자 삭제 오류:", err);
     }
   };
 
-  return <button onClick={handleUpdate}>대시보드수정</button>;
+  return edit ? (
+    <div className="flex">
+      <input
+        className="w-[100px] border-2"
+        value={name}
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+      />
+      <button onClick={handleUpdate} disabled={!name}>
+        수정
+      </button>
+    </div>
+  ) : (
+    <button onClick={() => setEdit(true)}>대시보드수정</button>
+  );
 }

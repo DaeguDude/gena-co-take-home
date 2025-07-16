@@ -4,5 +4,5 @@ export type Chart = {
   type: "bar" | "line" | "number";
   title: string;
   dataEndPoint: string;
-  order: string;
+  order: number;
 };

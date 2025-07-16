@@ -1,20 +1,18 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { User } from "./api/users/route";
+import { Chart } from "./api/charts/type";
 
-export function DeleteUserButton({ user }: { user: User }) {
+export function DeleteChartButton({ chart }: { chart: Chart }) {
   const router = useRouter();
 
   const handleDelete = async () => {
     try {
       // DELETE 요청을 /api/users 엔드포인트로 보냄
       // 쿼리 파라미터로 userId를 전달
-      const response = await fetch(`/api/users?id=${user.id}`, {
+      const response = await fetch(`/api/charts/${chart.id}`, {
         method: "DELETE",
       });
-
-      console.log("response: ", response);
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -27,5 +25,5 @@ export function DeleteUserButton({ user }: { user: User }) {
     }
   };
 
-  return <button onClick={handleDelete}>삭제</button>;
+  return <button onClick={handleDelete}>차트 Delete</button>;
 }
