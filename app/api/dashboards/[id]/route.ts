@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { dashboards } from "../data";
+import { dashboards, deleteDashboard } from "../data";
 import { revalidateTag } from "next/cache";
 
 export async function GET(
@@ -29,11 +29,7 @@ export async function PUT(
 
   // TODO: validation
 
-  console.log("id: ", id);
-  const dashboardIndex = dashboards.findIndex((d) => {
-    console.log("d: ", d);
-    return d.id === id;
-  });
+  const dashboardIndex = dashboards.findIndex((d) => d.id === id);
 
   if (dashboardIndex === -1) {
     return NextResponse.json(
@@ -49,4 +45,32 @@ export async function PUT(
 
   revalidateTag("/dashboards");
   return NextResponse.json(dashboards[dashboardIndex]);
+}
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const { id } = await params;
+
+  // TODO: ID가 제공되었는지 확인
+  if (!id) {
+    return NextResponse.json({ message: "ID가 필요합니다." }, { status: 400 });
+  }
+
+  const initialLength = dashboards.length;
+  deleteDashboard(id);
+
+  if (dashboards.length < initialLength) {
+    revalidateTag("/dashboards");
+    return NextResponse.json(
+      { message: "Deleted", deletedId: id },
+      { status: 200 }
+    );
+  } else {
+    NextResponse.json(
+      { message: `항목 id ${id}를 찾을 수 없습니다.` },
+      { status: 404 }
+    );
+  }
 }

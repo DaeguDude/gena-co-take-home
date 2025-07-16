@@ -8,7 +8,7 @@ export function getNewDashboardId() {
   return `${DASHBOARD_ID_PREFIX}-${DASHBOARD_ID_SEQUENCE}`;
 }
 
-export const dashboards: Dashboard[] = [
+export let dashboards: Dashboard[] = [
   {
     id: getNewDashboardId(),
     name: "일일 매출 현황판",
@@ -25,3 +25,7 @@ export const dashboards: Dashboard[] = [
     charts: ["c-o01"], // operation_chart_01
   },
 ];
+
+export function deleteDashboard(id: string) {
+  dashboards = dashboards.filter((d) => d.id !== id);
+}

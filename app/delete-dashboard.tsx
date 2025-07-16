@@ -3,19 +3,15 @@
 import { useRouter } from "next/navigation";
 import { Dashboard } from "./api/dashboards/type";
 
-export function UpdateDashboardButton({ dashboard }: { dashboard: Dashboard }) {
+export function DeleteDashboardButton({ dashboard }: { dashboard: Dashboard }) {
   const router = useRouter();
 
-  const handleUpdate = async () => {
+  const handleDelete = async () => {
     try {
       // DELETE 요청을 /api/users 엔드포인트로 보냄
       // 쿼리 파라미터로 userId를 전달
       const response = await fetch(`/api/dashboards/${dashboard.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: "대시보드아이디2번" }),
+        method: "DELETE",
       });
 
       if (!response.ok) {
@@ -29,5 +25,5 @@ export function UpdateDashboardButton({ dashboard }: { dashboard: Dashboard }) {
     }
   };
 
-  return <button onClick={handleUpdate}>대시보드수정</button>;
+  return <button onClick={handleDelete}>대시보드 Delete</button>;
 }

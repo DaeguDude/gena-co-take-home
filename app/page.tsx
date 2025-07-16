@@ -4,6 +4,7 @@ import { DeleteUserButton } from "./button";
 import { Dashboard } from "./api/dashboards/type";
 import { CreateDashboardButton } from "./create-dashboard";
 import { UpdateDashboardButton } from "./update-dashboard";
+import { DeleteDashboardButton } from "./delete-dashboard";
 
 async function getUsers(): Promise<User[]> {
   const res = await fetch("http://localhost:3000/api/users", {
@@ -88,8 +89,16 @@ export default async function Home() {
               <DeleteUserButton user={user} />
             </div>
           ))}
+
+          {dashboards.map((dashboard) => (
+            <div key={dashboard.id} className="flex gap-8">
+              <div>{dashboard.id}</div>
+              <div>{dashboard.name}</div>
+              <UpdateDashboardButton dashboard={dashboard} />
+              <DeleteDashboardButton dashboard={dashboard} />
+            </div>
+          ))}
           <CreateDashboardButton />
-          <UpdateDashboardButton />
         </div>
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
