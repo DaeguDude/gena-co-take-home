@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { Chart, ChartType } from "./api/charts/type";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { DatasetMetadata } from "./api/data/type";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 export function CreateChartButton() {
   const [edit, setEdit] = useState(false);
@@ -38,18 +38,24 @@ export function CreateChartButton() {
   };
 
   return edit ? (
-    <ChartForm onCancel={() => setEdit(false)} />
+    <ChartForm onCancel={() => setEdit(false)} onSave={() => setEdit(false)} />
   ) : (
     <div onClick={() => setEdit(true)}>차트생성</div>
   );
 }
 
-function ChartForm({ onCancel }: { onCancel?: () => void }) {
+export function ChartForm({
+  chart,
+  onCancel,
+  onSave,
+}: {
+  onCancel?: () => void;
+  onSave?: () => void;
+  chart?: Chart;
+}) {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [name, setName] = useState("");
-  const [selectedDataset, setSelectedDataset] = useState<DatasetMetadata>();
-  const [selectedChartType, setSelectedChartType] = useState<ChartType>();
+  const [title, setTitle] = useState(chart?.title ?? "");
 
   const { data: datasetMetadata } = useQuery({
     queryKey: ["dataset"],
@@ -67,35 +73,82 @@ function ChartForm({ onCancel }: { onCancel?: () => void }) {
     },
   });
 
-  // dashboardId: string;
-  // type: "bar" | "line" | "number";
-  // title: string;
-  // dataEndPoint: string;
-  const handleCreate = async () => {
+  const initialDataset = useMemo(() => {
+    const found = datasetMetadata?.find(
+      (metadata) => metadata.endpoint === chart?.dataEndPoint
+    );
+    return found;
+  }, [chart?.dataEndPoint, datasetMetadata]);
+  const [selectedDataset, setSelectedDataset] = useState<
+    DatasetMetadata | undefined
+  >(initialDataset);
+  const [selectedChartType, setSelectedChartType] = useState<ChartType>();
+
+  const handleSave = async () => {
+    const isCreate = !chart;
     try {
-      if (name && selectedDataset?.endpoint && selectedChartType) {
-        const chartForm: Omit<Chart, "id" | "order"> = {
-          dashboardId: "dashboard-1",
-          dataEndPoint: selectedDataset.endpoint!,
-          title: name,
-          type: selectedChartType,
-        };
+      if (isCreate) {
+        if (title && selectedDataset?.endpoint && selectedChartType) {
+          const chartForm: Omit<Chart, "id" | "order"> = {
+            dashboardId: "dashboard-1",
+            dataEndPoint: selectedDataset.endpoint!,
+            title: title,
+            type: selectedChartType,
+          };
 
-        const response = await fetch(`/api/charts`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(chartForm),
-        });
+          const response = await fetch(`/api/charts`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(chartForm),
+          });
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "사용자 삭제에 실패했어.");
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "사용자 삭제에 실패했어.");
+          }
+
+          router.refresh();
+          queryClient.invalidateQueries({
+            queryKey: ["charts", "dashboard-1"],
+          });
+          if (onSave) onSave();
         }
+      } else {
+        console.log("{title, selectedDataset, selectedChartType}: ", {
+          title,
+          selectedDataset,
+          selectedChartType,
+        });
+        if (title && selectedDataset?.endpoint && selectedChartType) {
+          const chartForm = {
+            id: chart.id!,
+            dashboardId: chart.dashboardId,
+            dataEndPoint: selectedDataset.endpoint!,
+            title: title,
+            type: selectedChartType,
+          };
 
-        router.refresh();
-        queryClient.invalidateQueries({ queryKey: ["charts", "dashboard-1"] });
+          const response = await fetch(`/api/charts`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(chartForm),
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || "사용자 삭제에 실패했어.");
+          }
+
+          router.refresh();
+          queryClient.invalidateQueries({
+            queryKey: ["charts", "dashboard-1"],
+          });
+          if (onSave) onSave();
+        }
       }
     } catch (err) {
       console.error("사용자 삭제 오류:", err);
@@ -106,8 +159,8 @@ function ChartForm({ onCancel }: { onCancel?: () => void }) {
       <h1 className="text-2xl">차트 폼</h1>
 
       <input
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         className="border-2"
       />
 
@@ -147,7 +200,7 @@ function ChartForm({ onCancel }: { onCancel?: () => void }) {
       </div>
 
       <div className="flex gap-8">
-        <button onClick={handleCreate}>생성</button>
+        <button onClick={handleSave}>생성</button>
         <button onClick={onCancel}>취소</button>
       </div>
     </div>

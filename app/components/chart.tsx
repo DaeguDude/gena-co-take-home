@@ -7,6 +7,7 @@ import {
   NumberChartData,
 } from "../api/charts/type";
 import { DeleteChartButton } from "../delete-chart-button";
+import { UpdateChartButton } from "./update-chart";
 
 async function getData(endpoint: string) {
   const res = await fetch(`http://localhost:3000${endpoint}`, {
@@ -32,13 +33,13 @@ export function XXChart({ chart }: { chart: Chart }) {
       return { type: chart.type, data } as ChartDataResponse;
     },
   });
-  console.log("chartDataResponse: ", chartDataResponse);
 
   return (
     <div key={chart.id} className="flex gap-8">
       <div>{chart.id}</div>
       <div>{chart.title}</div>
       <div>{chart.type}</div>
+      <UpdateChartButton chart={chart} />
       <DeleteChartButton chart={chart} />
 
       <div className="mt-2">
