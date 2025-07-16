@@ -1,15 +1,20 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function CreateDashboardButton() {
+  const [edit, setEdit] = useState(false);
+  const [name, setName] = useState<string>("");
   const router = useRouter();
+
+  const reset = () => {
+    setEdit(false);
+    setName("");
+  };
 
   const handleCreate = async () => {
     try {
-      const name = "상학이대시보드";
-      // DELETE 요청을 /api/users 엔드포인트로 보냄
-      // 쿼리 파라미터로 userId를 전달
       const response = await fetch(`/api/dashboards`, {
         method: "POST",
         headers: {
@@ -24,10 +29,26 @@ export function CreateDashboardButton() {
       }
 
       router.refresh();
+      reset();
     } catch (err) {
       console.error("사용자 삭제 오류:", err);
     }
   };
 
-  return <button onClick={handleCreate}>대시보드생성</button>;
+  return edit ? (
+    <div className="flex">
+      <input
+        className="w-[100px] border-2"
+        value={name}
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+      />
+      <button onClick={handleCreate} disabled={!name}>
+        생성
+      </button>
+    </div>
+  ) : (
+    <button onClick={() => setEdit(true)}>대시보드생성</button>
+  );
 }
