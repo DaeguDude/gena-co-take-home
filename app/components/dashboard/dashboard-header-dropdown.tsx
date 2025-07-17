@@ -30,14 +30,14 @@ export function DashboardHeaderDropdown({
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
           <DropdownMenuItem onClick={() => setEditDialogOpen(true)}>
-            수정
+            Edit
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => setDeleteDialogOpen(true)}
             variant="destructive"
           >
-            삭제
+            Delete
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

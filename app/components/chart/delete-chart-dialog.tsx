@@ -6,14 +6,20 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { DialogProps } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
-export function DeleteChartButton({ chartId }: { chartId: string }) {
-  const [open, setOpen] = useState(false);
+export function DeleteChartDialog({
+  chartId,
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: DialogProps["onOpenChange"];
+  chartId: string;
+}) {
   const router = useRouter();
 
   const handleDelete = async () => {
@@ -30,17 +36,14 @@ export function DeleteChartButton({ chartId }: { chartId: string }) {
       }
 
       router.refresh();
-      setOpen(false);
+      if (onOpenChange) onOpenChange(false);
     } catch (err) {
       console.error("사용자 삭제 오류:", err);
     }
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
-        <Button variant="outline">Delete</Button>
-      </AlertDialogTrigger>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
