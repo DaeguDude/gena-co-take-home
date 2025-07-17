@@ -10,13 +10,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { CirclePlus } from "lucide-react";
-import { Chart, ChartType } from "../api/charts/type";
 import { useMemo, useState } from "react";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { ChartForm, TChartForm } from "./chart-form";
 import { useQuery } from "@tanstack/react-query";
-import { DatasetMetadata } from "../api/data/type";
+import { Chart, ChartType } from "@/app/api/charts/type";
+import { DatasetMetadata } from "@/app/api/data/type";
 
 const formSchema = z.object({
   id: z.string(),

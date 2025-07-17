@@ -1,9 +1,9 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ChartType } from "../api/charts/type";
-import { DatasetMetadata } from "../api/data/type";
-import { DatasetSelect } from "./dataset-select";
 import { ChartTypeSelect } from "./chart-type-select";
+import { DatasetMetadata } from "@/app/api/data/type";
+import { ChartType } from "@/app/api/charts/type";
+import { DatasetSelect } from "../dataset-select";
 
 export type TChartForm = {
   title: string;

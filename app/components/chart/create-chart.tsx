@@ -1,10 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Chart, ChartType } from "./api/charts/type";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { DatasetMetadata } from "./api/data/type";
 import { useMemo, useState } from "react";
+import { Chart, ChartType } from "@/app/api/charts/type";
+import { DatasetMetadata } from "@/app/api/data/type";
 
 export function CreateChartButton() {
   const [edit, setEdit] = useState(false);

@@ -1,5 +1,6 @@
 "use client";
 
+import { ChartType } from "@/app/api/charts/type";
 import {
   Select,
   SelectTrigger,
@@ -9,7 +10,6 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 
-import { ChartType } from "../api/charts/type";
 import { useMemo } from "react";
 
 type ChartTypeOption = { label: string; value: ChartType; disabled?: boolean };

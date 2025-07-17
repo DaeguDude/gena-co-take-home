@@ -1,13 +1,13 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
+
 import {
   BarChartData,
   Chart,
   LineChartData,
   NumberChartData,
-} from "../api/charts/type";
-import { DeleteChartButton } from "../delete-chart-button";
-import { UpdateChartButton } from "./update-chart-button";
+} from "@/app/api/charts/type";
+import { XXBarChart } from "./xx-bar-chart";
 
 async function getData(endpoint: string) {
   const res = await fetch(`http://localhost:3000${endpoint}`, {
@@ -36,16 +36,9 @@ export function XXChart({ chart }: { chart: Chart }) {
 
   return (
     <div key={chart.id} className="flex gap-8">
-      <div>{chart.id}</div>
-      <div>{chart.title}</div>
-      <div>{chart.type}</div>
-      <UpdateChartButton chart={chart} />
-      <DeleteChartButton chart={chart} />
-
-      <div className="mt-2">
-        <h1 className="text-2xl font-semibold">Chart Data</h1>
-        {chartDataResponse && <ChartDataDisplay {...chartDataResponse} />}
-      </div>
+      {chartDataResponse && (
+        <ChartDataDisplay {...chartDataResponse} chart={chart} />
+      )}
     </div>
   );
 }
@@ -55,13 +48,18 @@ type ChartDataResponse =
   | { type: "line"; data: LineChartData }
   | { type: "number"; data: NumberChartData };
 
-function ChartDataDisplay({ type, data }: ChartDataResponse) {
+function ChartDataDisplay({
+  type,
+  data,
+  chart,
+}: ChartDataResponse & { chart: Chart }) {
   if (type === "bar" || type === "line") {
     return (
-      <div>
-        <div>{data.labels.map((l) => l)}</div>
-        <div>{data.values.map((v) => v)}</div>
-      </div>
+      <XXBarChart chart={chart} data={data} />
+      // <div>
+      //   <div>{data.labels.map((l) => l)}</div>
+      //   <div>{data.values.map((v) => v)}</div>
+      // </div>
     );
   }
 

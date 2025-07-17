@@ -10,11 +10,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { CirclePlus } from "lucide-react";
-import { Chart, ChartType } from "../api/charts/type";
 import { useState } from "react";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { ChartForm, TChartForm } from "./chart-form";
+import { Chart, ChartType } from "@/app/api/charts/type";
 
 const formSchema = z.object({
   title: z.string(),

@@ -1,6 +1,6 @@
 import { Chart } from "@/app/api/charts/type";
 import { Dashboard } from "@/app/api/dashboards/type";
-import { XXChart } from "@/app/components/chart";
+import { XXChart } from "@/app/components/chart/chart";
 import { Header } from "@/app/components/header";
 
 async function getCharts(ids?: string[]): Promise<Chart[]> {
