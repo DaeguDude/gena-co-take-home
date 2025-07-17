@@ -83,31 +83,32 @@ export function CreateChartButton({ dashboardId }: { dashboardId: string }) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="outline" size="sm">
-            <CirclePlus /> create chart
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Create Chart</DialogTitle>
-            <DialogDescription>
-              This dashboard gives you a quick glance at your most important
-              analytics, charts, and insights. Easily track trends, performance,
-              and key metrics in real-time.
-            </DialogDescription>
-          </DialogHeader>
-          <ChartForm form={form} onChange={setForm} />
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            <Button onClick={handleSave}>Save</Button>
-          </DialogFooter>
-        </DialogContent>
-      </form>
-    </Dialog>
+    <>
+      <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
+        <CirclePlus /> create chart
+      </Button>
+
+      {open && (
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Create Chart</DialogTitle>
+              <DialogDescription>
+                This dashboard gives you a quick glance at your most important
+                analytics, charts, and insights. Easily track trends,
+                performance, and key metrics in real-time.
+              </DialogDescription>
+            </DialogHeader>
+            <ChartForm form={form} onChange={setForm} />
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button onClick={handleSave}>Save</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
   );
 }

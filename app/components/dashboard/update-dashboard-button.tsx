@@ -9,23 +9,25 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Dashboard } from "../../api/dashboards/type";
+import { DialogProps } from "@radix-ui/react-dialog";
 
-export function UpdateDashboardButton({ dashboard }: { dashboard: Dashboard }) {
-  const [open, setOpen] = useState(false);
+export function DashboardDialog({
+  dashboard,
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: DialogProps["onOpenChange"];
+  dashboard: Dashboard;
+}) {
   const [name, setName] = useState<string>(dashboard.name);
   const router = useRouter();
-
-  const reset = () => {
-    setOpen(false);
-    setName("");
-  };
 
   const handleUpdate = async () => {
     try {
@@ -43,53 +45,50 @@ export function UpdateDashboardButton({ dashboard }: { dashboard: Dashboard }) {
       }
 
       router.refresh();
-      reset();
+      if (onOpenChange) onOpenChange(false);
     } catch (err) {
       console.error("Failed to update a dashboard:", err);
     }
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <form>
-        <DialogTrigger asChild>
-          <Button variant="outline" size="sm">
-            수정
-          </Button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Update Dashboard</DialogTitle>
-            <DialogDescription>
-              This dashboard gives you a quick glance at your most important
-              analytics, charts, and insights. Easily track trends, performance,
-              and key metrics in real-time.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                placeholder="dashboard name"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
+    <>
+      {open && (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Update Dashboard</DialogTitle>
+              <DialogDescription>
+                This dashboard gives you a quick glance at your most important
+                analytics, charts, and insights. Easily track trends,
+                performance, and key metrics in real-time.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4">
+              <div className="grid gap-3">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  placeholder="dashboard name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DialogClose>
-            {/* TODO: 로딩 state 넣어주기 */}
-            <Button type="submit" onClick={handleUpdate}>
-              Save
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </form>
-    </Dialog>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              {/* TODO: 로딩 state 넣어주기 */}
+              <Button type="submit" onClick={handleUpdate}>
+                Save
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
+    </>
   );
 }

@@ -57,15 +57,10 @@ export default async function DashboardIdPage({
   return (
     <main className="flex flex-col flex-1">
       <Header dashboard={dashboard} />
-      <div className="flex">
-        <div>
-          <div className="mt-4">
-            <h1 className="text-5xl">charts</h1>
-            {charts.map((chart) => (
-              <XXChart key={chart.id} chart={chart} />
-            ))}
-          </div>
-        </div>
+      <div className="flex p-4">
+        {charts.map((chart) => (
+          <XXChart key={chart.id} chart={chart} />
+        ))}
       </div>
     </main>
   );
