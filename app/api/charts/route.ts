@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
       charts: [...dashboards[dashboardIndex].charts, newChart.id],
     };
 
-    revalidateTag(`dashboard-${chartForm.dashboardId}`);
+    revalidateTag(`${chartForm.dashboardId}`);
     revalidateTag("charts");
     return NextResponse.json(charts);
   } catch (err) {
