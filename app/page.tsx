@@ -1,8 +1,6 @@
 import { Dashboard } from "./api/dashboards/type";
 import { Chart } from "./api/charts/type";
-import { CreateChartButton } from "./create-chart";
-import { DashboardList } from "./components/dashboard-list";
-import { XXChart } from "./components/chart";
+import { Header } from "./components/header";
 
 async function getCharts(ids?: string[]): Promise<Chart[]> {
   let xxApiPath = "charts";
@@ -23,25 +21,6 @@ async function getCharts(ids?: string[]): Promise<Chart[]> {
 
   // 응답을 JSON으로 파싱하고 정의된 타입으로 캐스팅
   const data: Chart[] = await res.json();
-  return data;
-}
-
-async function getDashboards(): Promise<Dashboard[]> {
-  const res = await fetch("http://localhost:3000/api/dashboards", {
-    cache: "no-store",
-    next: {
-      tags: ["dashboards"],
-    },
-  });
-
-  if (!res.ok) {
-    throw new Error(
-      `대시보드 데이터를 가져오는 데 실패했어: ${res.statusText}`
-    );
-  }
-
-  // 응답을 JSON으로 파싱하고 정의된 타입으로 캐스팅
-  const data: Dashboard[] = await res.json();
   return data;
 }
 
@@ -86,24 +65,28 @@ async function getChart(id: string): Promise<Dashboard> {
 }
 
 export default async function Home() {
-  const dashboards = await getDashboards();
-  const charts = await getCharts();
+  // const charts = await getCharts();
 
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <div>
-          <div className="mt-4">
-            <h1 className="text-5xl">charts</h1>
-            {charts.map((chart) => (
-              <XXChart key={chart.id} chart={chart} />
-            ))}
-            <CreateChartButton />
-          </div>
+    <main className="flex flex-1">
+      <Header />
+      <div></div>
+      {/* 헤더 */}
+    </main>
+    // <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+    //   <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+    //     <div>
+    //       <div className="mt-4">
+    //         <h1 className="text-5xl">charts</h1>
+    //         {charts.map((chart) => (
+    //           <XXChart key={chart.id} chart={chart} />
+    //         ))}
+    //         <CreateChartButton />
+    //       </div>
 
-          <DashboardList dashboards={dashboards} />
-        </div>
-      </main>
-    </div>
+    //       <DashboardList dashboards={dashboards} />
+    //     </div>
+    //   </main>
+    // </div>
   );
 }
