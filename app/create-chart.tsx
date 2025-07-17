@@ -116,11 +116,6 @@ export function ChartForm({
           if (onSave) onSave();
         }
       } else {
-        console.log("{title, selectedDataset, selectedChartType}: ", {
-          title,
-          selectedDataset,
-          selectedChartType,
-        });
         if (title && selectedDataset?.endpoint && selectedChartType) {
           const chartForm = {
             id: chart.id!,

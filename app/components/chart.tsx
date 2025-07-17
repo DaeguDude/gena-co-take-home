@@ -7,7 +7,7 @@ import {
   NumberChartData,
 } from "../api/charts/type";
 import { DeleteChartButton } from "../delete-chart-button";
-import { UpdateChartButton } from "./update-chart";
+import { UpdateChartButton } from "./update-chart-button";
 
 async function getData(endpoint: string) {
   const res = await fetch(`http://localhost:3000${endpoint}`, {
