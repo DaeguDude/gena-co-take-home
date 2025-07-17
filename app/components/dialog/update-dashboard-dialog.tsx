@@ -17,7 +17,7 @@ import { useState } from "react";
 import { Dashboard } from "../../api/dashboards/type";
 import { DialogProps } from "@radix-ui/react-dialog";
 
-export function DashboardDialog({
+export function UpdateDashboardDialog({
   dashboard,
   open,
   onOpenChange,
@@ -59,9 +59,8 @@ export function DashboardDialog({
             <DialogHeader>
               <DialogTitle>Update Dashboard</DialogTitle>
               <DialogDescription>
-                This dashboard gives you a quick glance at your most important
-                analytics, charts, and insights. Easily track trends,
-                performance, and key metrics in real-time.
+                Update your dashboard’s name and click Save to apply the
+                changes.
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4">

@@ -8,69 +8,42 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { ChartForm, TChartForm } from "./chart-form";
-import { useQuery } from "@tanstack/react-query";
+import { ChartForm, TChartForm } from "../chart/chart-form";
 import { Chart, ChartType } from "@/app/api/charts/type";
-import { DatasetMetadata } from "@/app/api/data/type";
 import { DialogProps } from "@radix-ui/react-dialog";
 
 const formSchema = z.object({
-  id: z.string(),
-  dashboardId: z.string(),
-  dataEndPoint: z.string(),
   title: z.string(),
+  dashboardId: z.string(),
   type: z.string(),
+  dataEndPoint: z.string(),
 });
 
 // TODO: dataset 변경시 Type 제대로 변경안되는거 고쳐주기
-export function ChartDialog({
-  chart,
+export function CreateChartDialog({
+  dashboardId,
   open,
   onOpenChange,
 }: {
-  chart: Chart;
+  dashboardId: string;
   open: boolean;
   onOpenChange: DialogProps["onOpenChange"];
 }) {
   const router = useRouter();
 
-  const { data: datasetMetadata } = useQuery({
-    queryKey: ["dataset"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:3000/api/data", {
-        cache: "no-cache",
-      });
-
-      if (!res.ok) {
-        throw new Error(`사용가능한 데이터셋을 찾아오는데 실패`);
-      }
-
-      const data: DatasetMetadata[] = await res.json();
-      return data;
-    },
-  });
-
-  const initialDataset = useMemo(() => {
-    const found = datasetMetadata?.find(
-      (metadata) => metadata.endpoint === chart?.dataEndPoint
-    );
-    return found;
-  }, [chart?.dataEndPoint, datasetMetadata]);
-
   const [form, setForm] = useState<TChartForm>({
-    title: chart.title,
-    chartType: chart.type,
-    dataset: initialDataset,
+    title: "",
+    chartType: undefined,
+    dataset: undefined,
   });
 
   const handleSave = async () => {
     const validated = formSchema.safeParse({
-      id: chart.id,
       title: form.title,
-      dashboardId: chart.dashboardId,
+      dashboardId,
       type: form.chartType,
       dataEndPoint: form.dataset?.endpoint,
     });
@@ -79,8 +52,7 @@ export function ChartDialog({
       return console.log("Failed to validate");
     } else {
       try {
-        const chartForm = {
-          id: chart.id,
+        const chartForm: Omit<Chart, "id" | "order"> = {
           dashboardId: validated.data.dashboardId,
           dataEndPoint: validated.data.dataEndPoint,
           title: validated.data.title,
@@ -88,7 +60,7 @@ export function ChartDialog({
         };
 
         const response = await fetch(`/api/charts`, {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -112,11 +84,10 @@ export function ChartDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Update Chart</DialogTitle>
+          <DialogTitle>Create Chart</DialogTitle>
           <DialogDescription>
-            This dashboard gives you a quick glance at your most important
-            analytics, charts, and insights. Easily track trends, performance,
-            and key metrics in real-time.
+            Create a new chart by setting the title, selecting a dataset, and
+            choosing a chart type.
           </DialogDescription>
         </DialogHeader>
         <ChartForm form={form} onChange={setForm} />

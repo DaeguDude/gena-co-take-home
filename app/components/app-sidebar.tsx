@@ -1,4 +1,4 @@
-import { Inbox } from "lucide-react";
+import { Home, Inbox } from "lucide-react";
 
 import {
   Sidebar,
@@ -6,13 +6,14 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Dashboard } from "../api/dashboards/type";
-import { CreateDashboardButton } from "./dashboard/create-dashboard-button";
 import Link from "next/link";
+import { SidebarMenus } from "./sidbar-menu-items";
 
 async function getDashboards(): Promise<Dashboard[]> {
   const res = await fetch("http://localhost:3000/api/dashboards", {
@@ -38,29 +39,20 @@ export async function AppSidebar() {
 
   return (
     <Sidebar>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <span className="text-base font-semibold">Gena Co</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {dashboards.map((dashboard) => (
-                <SidebarMenuItem key={dashboard.id}>
-                  <SidebarMenuButton asChild>
-                    <Link href={`/${dashboard.id}`}>
-                      <Inbox />
-                      <span>{dashboard.name}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-              <SidebarMenuItem key={"create-new"}>
-                <SidebarMenuButton asChild>
-                  <div className="cursor-pointer">
-                    <CreateDashboardButton />
-                  </div>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
+            <SidebarMenus dashboards={dashboards} />
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

@@ -7,9 +7,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Ellipsis } from "lucide-react";
 import { Chart } from "@/app/api/charts/type";
-import { ChartDialog } from "./chart-dialog";
+import { EditChartDialog, DeleteChartDialog } from "../dialog";
 import { useState } from "react";
-import { DeleteChartDialog } from "./delete-chart-dialog";
 
 export function ChartDropdown({ chart }: { chart: Chart }) {
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -36,7 +35,7 @@ export function ChartDropdown({ chart }: { chart: Chart }) {
       </DropdownMenu>
 
       {editDialogOpen && (
-        <ChartDialog
+        <EditChartDialog
           chart={chart}
           open={editDialogOpen}
           onOpenChange={setEditDialogOpen}

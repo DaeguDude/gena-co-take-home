@@ -15,6 +15,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { ChartForm, TChartForm } from "./chart-form";
 import { Chart, ChartType } from "@/app/api/charts/type";
+import { DialogProps } from "@radix-ui/react-dialog";
 
 const formSchema = z.object({
   title: z.string(),

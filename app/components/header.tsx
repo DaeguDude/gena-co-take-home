@@ -1,24 +1,44 @@
 "use client";
 
-import { TypographyH4 } from "@/components/ui/typography";
 import { Dashboard } from "../api/dashboards/type";
 import { DashboardHeaderDropdown } from "./dashboard/dashboard-header-dropdown";
-import { CreateChartButton } from "./chart/create-chart-button";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { CirclePlus } from "lucide-react";
+import { CreateChartDialog } from "./dialog";
 
 export function Header({ dashboard }: { dashboard: Dashboard }) {
+  const [createChartDialogOpen, setCreateChartDialogOpen] = useState(false);
+
   return (
-    <header className="min-h-[76px] h-[76px] flex items-center border-gray-200 border-1">
-      <div className="flex flex-1 px-4 justify-between items-center">
-        <TypographyH4>{dashboard.name}</TypographyH4>
-        <div className="flex gap-2">
-          <div className="flex gap-1 items-center">
-            <CreateChartButton dashboardId={dashboard.id} />
-          </div>
-          <div className="flex items-center">
-            <DashboardHeaderDropdown dashboard={dashboard} />
+    <>
+      <header className="min-h-[48px] h-[48px] flex items-center border-gray-200 border-1">
+        <div className="flex flex-1 px-4 justify-between items-center">
+          <span className="text-base font-semibold">{dashboard.name}</span>
+          <div className="flex gap-2">
+            <div className="flex gap-1 items-center">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setCreateChartDialogOpen(true)}
+              >
+                <CirclePlus /> create chart
+              </Button>
+            </div>
+            <div className="flex items-center">
+              <DashboardHeaderDropdown dashboard={dashboard} />
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+
+      {createChartDialogOpen && (
+        <CreateChartDialog
+          dashboardId={dashboard.id}
+          onOpenChange={setCreateChartDialogOpen}
+          open={createChartDialogOpen}
+        />
+      )}
+    </>
   );
 }

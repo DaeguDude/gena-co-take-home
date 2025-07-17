@@ -7,9 +7,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Ellipsis } from "lucide-react";
-import { DashboardDialog } from "./update-dashboard-button";
+import { UpdateDashboardDialog, DeleteDashboardDialog } from "../dialog";
 import { Dashboard } from "../../api/dashboards/type";
-import { DeleteDashboardDialog } from "./delete-dashboard-dialog";
 import { useState } from "react";
 
 export function DashboardHeaderDropdown({
@@ -43,7 +42,7 @@ export function DashboardHeaderDropdown({
       </DropdownMenu>
 
       {editDialogOpen && (
-        <DashboardDialog
+        <UpdateDashboardDialog
           dashboard={dashboard}
           open={editDialogOpen}
           onOpenChange={setEditDialogOpen}

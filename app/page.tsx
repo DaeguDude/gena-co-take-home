@@ -69,7 +69,6 @@ export default async function Home() {
 
   return (
     <main className="flex flex-1">
-      <Header />
       <div></div>
       {/* 헤더 */}
     </main>
