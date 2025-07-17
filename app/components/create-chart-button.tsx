@@ -9,55 +9,81 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectGroup,
-  SelectLabel,
-  SelectItem,
-} from "@/components/ui/select";
 import { CirclePlus } from "lucide-react";
 import { Chart, ChartType } from "../api/charts/type";
-import { useQueryClient, useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/router";
-import { useState, useMemo } from "react";
-import { DatasetMetadata } from "../api/data/type";
-import { DatasetSelect } from "./dataset-select";
-import { ChartTypeSelect } from "./chart-type-select";
+import { useState } from "react";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+import { ChartForm, TChartForm } from "./chart-form";
+
+const formSchema = z.object({
+  title: z.string(),
+  dashboardId: z.string(),
+  type: z.string(),
+  dataEndPoint: z.string(),
+});
 
 export function CreateChartButton({ dashboardId }: { dashboardId: string }) {
-  const queryClient = useQueryClient();
-  // const [title, setTitle] = useState(chart?.title ?? "");
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
 
-  const { data: datasetMetadata } = useQuery({
-    queryKey: ["dataset"],
-    queryFn: async () => {
-      const res = await fetch("http://localhost:3000/api/data", {
-        cache: "no-cache",
-      });
-
-      if (!res.ok) {
-        throw new Error(`사용가능한 데이터셋을 찾아오는데 실패`);
-      }
-
-      const data: DatasetMetadata[] = await res.json();
-      return data;
-    },
+  const [form, setForm] = useState<TChartForm>({
+    title: "",
+    chartType: undefined,
+    dataset: undefined,
   });
 
-  console.log("datasetMetadata: ", datasetMetadata);
+  const reset = () => {
+    setForm({
+      title: "",
+      chartType: undefined,
+      dataset: undefined,
+    });
+    setOpen(false);
+  };
 
-  const [selectedDataset, setSelectedDataset] = useState<
-    DatasetMetadata | undefined
-  >();
-  const [selectedChartType, setSelectedChartType] = useState<ChartType>();
+  const handleSave = async () => {
+    const validated = formSchema.safeParse({
+      title: form.title,
+      dashboardId,
+      type: form.chartType,
+      dataEndPoint: form.dataset?.endpoint,
+    });
+
+    if (!validated.success) {
+      return console.log("Failed to validate");
+    } else {
+      try {
+        const chartForm: Omit<Chart, "id" | "order"> = {
+          dashboardId: validated.data.dashboardId,
+          dataEndPoint: validated.data.dataEndPoint,
+          title: validated.data.title,
+          type: validated.data.type as ChartType,
+        };
+
+        const response = await fetch(`/api/charts`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(chartForm),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "사용자 삭제에 실패했어.");
+        }
+
+        router.refresh();
+        reset();
+      } catch (err) {
+        console.error("사용자 삭제 오류:", err);
+      }
+    }
+  };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
           <Button variant="outline" size="sm">
@@ -73,25 +99,12 @@ export function CreateChartButton({ dashboardId }: { dashboardId: string }) {
               and key metrics in real-time.
             </DialogDescription>
           </DialogHeader>
-          <div className="grid gap-4">
-            <div className="grid gap-3">
-              <Label htmlFor="name-1">Name</Label>
-              <Input id="name-1" name="name" defaultValue="Pedro Duarte" />
-            </div>
-            <div className="grid gap-3">
-              <Label htmlFor="username-1">Datasets</Label>
-              <DatasetSelect onSelect={(data) => console.log(data)} />
-            </div>
-            <div className="grid gap-3">
-              <Label htmlFor="name-1">Type</Label>
-              <ChartTypeSelect supportedChartTypes={["bar", "line"]} />
-            </div>
-          </div>
+          <ChartForm form={form} onChange={setForm} />
           <DialogFooter>
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save</Button>
+            <Button onClick={handleSave}>Save</Button>
           </DialogFooter>
         </DialogContent>
       </form>

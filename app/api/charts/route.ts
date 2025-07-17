@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { charts, getNewChartId, getNewOrder } from "./data";
 import { Chart, ChartType } from "./type";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { dashboards } from "../dashboards/data";
 
 export function GET(request: NextRequest) {
@@ -75,8 +75,8 @@ export async function POST(request: NextRequest) {
       charts: [...dashboards[dashboardIndex].charts, newChart.id],
     };
 
+    revalidateTag(`dashboard-${chartForm.dashboardId}`);
     revalidateTag("charts");
-    revalidateTag("dashboards");
     return NextResponse.json(charts);
   } catch (err) {
     return NextResponse.json(

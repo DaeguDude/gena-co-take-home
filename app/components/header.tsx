@@ -7,8 +7,6 @@ import { CreateChartButton } from "./create-chart-button";
 import { Dashboard } from "../api/dashboards/type";
 
 export function Header({ dashboard }: { dashboard: Dashboard }) {
-  console.log("dashboard: ", dashboard);
-
   return (
     <header className="min-h-[76px] h-[76px] flex items-center border-gray-200 border-1">
       <div className="flex flex-1 px-4 justify-between items-center">
