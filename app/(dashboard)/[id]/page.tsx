@@ -57,7 +57,7 @@ export default async function DashboardIdPage({
 
   return (
     <main className="flex flex-col flex-1">
-      <Header />
+      <Header dashboard={dashboard} />
       <div className="flex">
         <div>
           <div className="mt-4">

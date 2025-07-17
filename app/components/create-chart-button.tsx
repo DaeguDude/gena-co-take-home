@@ -21,8 +21,41 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { CirclePlus } from "lucide-react";
+import { Chart, ChartType } from "../api/charts/type";
+import { useQueryClient, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/router";
+import { useState, useMemo } from "react";
+import { DatasetMetadata } from "../api/data/type";
+import { DatasetSelect } from "./dataset-select";
+import { ChartTypeSelect } from "./chart-type-select";
 
-export function DialogDemo() {
+export function CreateChartButton({ dashboardId }: { dashboardId: string }) {
+  const queryClient = useQueryClient();
+  // const [title, setTitle] = useState(chart?.title ?? "");
+
+  const { data: datasetMetadata } = useQuery({
+    queryKey: ["dataset"],
+    queryFn: async () => {
+      const res = await fetch("http://localhost:3000/api/data", {
+        cache: "no-cache",
+      });
+
+      if (!res.ok) {
+        throw new Error(`사용가능한 데이터셋을 찾아오는데 실패`);
+      }
+
+      const data: DatasetMetadata[] = await res.json();
+      return data;
+    },
+  });
+
+  console.log("datasetMetadata: ", datasetMetadata);
+
+  const [selectedDataset, setSelectedDataset] = useState<
+    DatasetMetadata | undefined
+  >();
+  const [selectedChartType, setSelectedChartType] = useState<ChartType>();
+
   return (
     <Dialog>
       <form>
@@ -47,35 +80,11 @@ export function DialogDemo() {
             </div>
             <div className="grid gap-3">
               <Label htmlFor="username-1">Datasets</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a fruit" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <DatasetSelect onSelect={(data) => console.log(data)} />
             </div>
             <div className="grid gap-3">
               <Label htmlFor="name-1">Type</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="apple"></SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <ChartTypeSelect supportedChartTypes={["bar", "line"]} />
             </div>
           </div>
           <DialogFooter>
