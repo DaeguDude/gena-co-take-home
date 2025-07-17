@@ -16,7 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { BarChartData, Chart } from "@/app/api/charts/type";
+import { BarChartData, Chart, NumberChartData } from "@/app/api/charts/type";
 import { useMemo } from "react";
 import { ChartDropdown } from "./chart-dropdown";
 
@@ -45,18 +45,13 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 // TODO: minimum width를 지정해줘야함
-export function XXBarChart({
+export function XXNumberChart({
   chart,
   data,
 }: {
   chart: Chart;
-  data: BarChartData;
+  data: NumberChartData;
 }) {
-  const transformedChartData = useMemo(
-    () => transformToChartData(data),
-    [data]
-  );
-
   return (
     <Card>
       <CardHeader>
@@ -67,7 +62,7 @@ export function XXBarChart({
         {/* <CardDescription>January - June 2024</CardDescription> */}
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        {/* <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={transformedChartData}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -83,7 +78,7 @@ export function XXBarChart({
             />
             <Bar dataKey="value" fill="var(--color-desktop)" radius={8} />
           </BarChart>
-        </ChartContainer>
+        </ChartContainer> */}
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">

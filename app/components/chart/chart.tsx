@@ -8,6 +8,7 @@ import {
   NumberChartData,
 } from "@/app/api/charts/type";
 import { XXBarChart } from "./xx-bar-chart";
+import { XXNumberChart } from "./xx-number-chart";
 
 async function getData(endpoint: string) {
   const res = await fetch(`http://localhost:3000${endpoint}`, {
@@ -63,5 +64,5 @@ function ChartDataDisplay({
     );
   }
 
-  return <div>{data.value}</div>;
+  return <XXNumberChart chart={chart} data={data} />;
 }

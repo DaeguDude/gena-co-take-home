@@ -52,7 +52,6 @@ export default async function DashboardIdPage({
 }) {
   const dashboardId = (await params).id;
   const dashboard = await getDashboard(dashboardId);
-  console.log("dashboard: ", dashboard);
   const charts = await getCharts(dashboard.charts);
 
   return (
