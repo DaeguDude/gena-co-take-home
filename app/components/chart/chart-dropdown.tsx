@@ -5,7 +5,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Ellipsis } from "lucide-react";
+import { EllipsisVertical } from "lucide-react";
 import { Chart } from "@/app/api/charts/type";
 import { EditChartDialog, DeleteChartDialog } from "../dialog";
 import { useState } from "react";
@@ -18,7 +18,7 @@ export function ChartDropdown({ chart }: { chart: Chart }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Ellipsis />
+          <EllipsisVertical className="text-gray-400" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
           <DropdownMenuItem onClick={() => setEditDialogOpen(true)}>

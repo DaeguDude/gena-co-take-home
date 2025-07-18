@@ -82,7 +82,7 @@ export function BarAndLineChart({
     <Card className="col-span-12">
       <CardHeader>
         <div className="flex justify-between">
-          <CardTitle>{chart.title}</CardTitle>
+          <CardTitle className="text-xl">{chart.title}</CardTitle>
           <ChartDropdown chart={chart} />
         </div>
         {/* <CardDescription>January - June 2024</CardDescription> */}
