@@ -4,17 +4,34 @@ import { Dashboard } from "../api/dashboards/type";
 import { DashboardHeaderDropdown } from "./dashboard/dashboard-header-dropdown";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CirclePlus } from "lucide-react";
+import { CirclePlus, Menu, X } from "lucide-react";
 import { CreateChartDialog } from "./dialog";
+import { SheetDemo } from "./sheet-demo";
 
 export function Header({ dashboard }: { dashboard: Dashboard }) {
   const [createChartDialogOpen, setCreateChartDialogOpen] = useState(false);
+  const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
     <>
-      <header className="min-h-[48px] h-[48px] flex items-center border-gray-200 border-1">
+      <header className="sticky top-0 z-52 bg-white min-h-[48px] h-[48px] flex items-center border-gray-200 border-1">
         <div className="flex flex-1 px-4 justify-between items-center">
-          <span className="text-base font-semibold">{dashboard.name}</span>
+          <div className="flex gap-2 items-center">
+            <div className="flex items-center md:hidden">
+              {/* 오픈되어있으면... 배경 그레이로 바꾸고 x로 바꿔주기 */}
+              <Button
+                variant="outline"
+                size="sm"
+                className={`${sheetOpen ? "bg-gray-100" : "bg-white"}`}
+                onClick={() => setSheetOpen(true)}
+              >
+                {sheetOpen ? <X /> : <Menu />}
+              </Button>
+            </div>
+            <div>
+              <span className="text-base font-semibold">{dashboard.name}</span>
+            </div>
+          </div>
           <div className="flex gap-2">
             <div className="flex gap-1 items-center">
               <Button
@@ -31,6 +48,8 @@ export function Header({ dashboard }: { dashboard: Dashboard }) {
           </div>
         </div>
       </header>
+
+      {sheetOpen && <SheetDemo open={sheetOpen} onOpenChange={setSheetOpen} />}
 
       {createChartDialogOpen && (
         <CreateChartDialog

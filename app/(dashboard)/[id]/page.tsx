@@ -4,6 +4,7 @@ import { BarChartCard } from "@/app/components/chart/bar-chart-card";
 import { LineChartCard } from "@/app/components/chart/line-chart-card";
 import { NumberChartCard } from "@/app/components/chart/number-chart-card";
 import { Header } from "@/app/components/header";
+import { SheetDemo } from "@/app/components/sheet-demo";
 
 async function getCharts(ids?: string[]): Promise<Chart[]> {
   let xxApiPath = "charts";
@@ -59,7 +60,6 @@ export default async function DashboardIdPage({
 }) {
   const dashboardId = (await params).id;
   const dashboard = await getDashboard(dashboardId);
-  console.log("dashboard: ", dashboard);
   const charts = await getCharts(dashboard.charts);
 
   const numberCharts = charts.filter((c) => c.type === "number");
@@ -68,6 +68,7 @@ export default async function DashboardIdPage({
   return (
     <main className="flex flex-col flex-1">
       <Header dashboard={dashboard} />
+
       <div className="p-4 flex flex-col gap-4">
         <div className="grid grid-cols-12 gap-4">
           {numberCharts.map((c) => (

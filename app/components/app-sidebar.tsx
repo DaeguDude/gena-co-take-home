@@ -1,5 +1,3 @@
-import { Home, Inbox } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
