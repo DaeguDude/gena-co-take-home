@@ -16,9 +16,28 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { BarChartData, Chart, NumberChartData } from "@/app/api/charts/type";
+import { BarChartData, Chart, LineChartData } from "@/app/api/charts/type";
 import { useMemo } from "react";
 import { ChartDropdown } from "./chart-dropdown";
+import { getData } from "@/app/lib";
+import { useQuery } from "@tanstack/react-query";
+
+export function BarAndLineChartCard({ chart }: { chart: Chart }) {
+  const { data: chartDataResponse } = useQuery({
+    queryKey: [chart.id, chart.dataEndPoint],
+    queryFn: async () => {
+      const data = await getData(chart.dataEndPoint);
+      return { type: chart.type, data } as {
+        type: "bar" | "line";
+        data: BarChartData | LineChartData;
+      };
+    },
+  });
+
+  if (!chartDataResponse) return null;
+
+  return <BarAndLineChart chart={chart} data={chartDataResponse.data} />;
+}
 
 export const description = "A bar chart";
 
@@ -44,14 +63,18 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-// TODO: minimum width를 지정해줘야함
-export function XXNumberChart({
+export function BarAndLineChart({
   chart,
   data,
 }: {
   chart: Chart;
-  data: NumberChartData;
+  data: BarChartData;
 }) {
+  const transformedChartData = useMemo(
+    () => transformToChartData(data),
+    [data]
+  );
+
   return (
     <Card>
       <CardHeader>
@@ -62,7 +85,7 @@ export function XXNumberChart({
         {/* <CardDescription>January - June 2024</CardDescription> */}
       </CardHeader>
       <CardContent>
-        {/* <ChartContainer config={chartConfig}>
+        <ChartContainer config={chartConfig}>
           <BarChart accessibilityLayer data={transformedChartData}>
             <CartesianGrid vertical={false} />
             <XAxis
@@ -78,16 +101,8 @@ export function XXNumberChart({
             />
             <Bar dataKey="value" fill="var(--color-desktop)" radius={8} />
           </BarChart>
-        </ChartContainer> */}
+        </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
-        </div>
-      </CardFooter>
     </Card>
   );
 }

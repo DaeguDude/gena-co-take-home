@@ -86,7 +86,7 @@ export function CreateChartButton({ dashboardId }: { dashboardId: string }) {
   return (
     <>
       <Button variant="outline" size="sm" onClick={() => setOpen(true)}>
-        <CirclePlus /> create chart
+        <CirclePlus /> Create chart
       </Button>
 
       {open && (

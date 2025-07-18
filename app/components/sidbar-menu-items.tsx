@@ -38,7 +38,7 @@ export function SidebarMenus({ dashboards }: { dashboards: Dashboard[] }) {
             onClick={() => setOpen(true)}
           >
             <CirclePlus />
-            <span>create dashboard</span>
+            <span>Create dashboard</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
       </SidebarMenu>

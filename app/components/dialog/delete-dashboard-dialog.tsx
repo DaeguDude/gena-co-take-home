@@ -34,8 +34,6 @@ export function DeleteDashboardDialog({
       }
 
       router.refresh();
-      // TODO: 대시보드리스트에서 불러와서 알맞은 곳으로 라우팅
-      // TODO: 대시보드가 1개 밖에 없다면 삭제할 수 없게 처리
       router.replace("dashboard-1");
       if (onOpenChange) onOpenChange(false);
     } catch (err) {

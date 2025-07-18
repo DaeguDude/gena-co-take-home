@@ -23,7 +23,7 @@ export async function getCharts(ids?: string[]): Promise<Chart[]> {
 }
 
 export async function getData(endpoint: string) {
-  const res = await fetch(`http://localhost:3000/api/data/${endpoint}`, {
+  const res = await fetch(`http://localhost:3000${endpoint}`, {
     cache: "no-store",
     next: {
       tags: [`data/${endpoint}`],

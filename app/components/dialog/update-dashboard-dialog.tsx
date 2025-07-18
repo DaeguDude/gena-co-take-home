@@ -80,7 +80,6 @@ export function UpdateDashboardDialog({
               <DialogClose asChild>
                 <Button variant="outline">Cancel</Button>
               </DialogClose>
-              {/* TODO: 로딩 state 넣어주기 */}
               <Button type="submit" onClick={handleUpdate}>
                 Save
               </Button>

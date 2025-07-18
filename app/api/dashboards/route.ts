@@ -10,8 +10,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   const { name }: { name: string } = await request.json();
 
-  // TODO: 데이터 유효성 검사
-
   const newDashboard: Dashboard = {
     id: getNewDashboardId(),
     name: name,

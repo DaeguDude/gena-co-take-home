@@ -19,15 +19,12 @@ export async function GET(
   return NextResponse.json(dashboard);
 }
 
-// 이름 업데이트
 export async function PUT(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const { id } = await params;
   const { name }: { name: string } = await request.json();
-
-  // TODO: validation
 
   const dashboardIndex = dashboards.findIndex((d) => d.id === id);
 
@@ -53,7 +50,6 @@ export async function DELETE(
 ) {
   const { id } = await params;
 
-  // TODO: ID가 제공되었는지 확인
   if (!id) {
     return NextResponse.json({ message: "ID가 필요합니다." }, { status: 400 });
   }

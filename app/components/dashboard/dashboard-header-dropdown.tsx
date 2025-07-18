@@ -49,7 +49,6 @@ export function DashboardHeaderDropdown({
         />
       )}
 
-      {/* TODO: refresh does not work */}
       {deleteDialogOpen && (
         <DeleteDashboardDialog
           dashboardId={dashboard.id}

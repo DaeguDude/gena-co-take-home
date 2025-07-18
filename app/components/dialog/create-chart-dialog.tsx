@@ -22,7 +22,7 @@ const formSchema = z.object({
   dataEndPoint: z.string(),
 });
 
-// TODO: dataset 변경시 Type 제대로 변경안되는거 고쳐주기
+// dataset 변경시 Type 제대로 변경안되는거 고쳐주기
 export function CreateChartDialog({
   dashboardId,
   open,

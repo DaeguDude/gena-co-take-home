@@ -22,7 +22,7 @@ export function Header({ dashboard }: { dashboard: Dashboard }) {
                 size="sm"
                 onClick={() => setCreateChartDialogOpen(true)}
               >
-                <CirclePlus /> create chart
+                <CirclePlus /> Create chart
               </Button>
             </div>
             <div className="flex items-center">

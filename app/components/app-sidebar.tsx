@@ -12,7 +12,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Dashboard } from "../api/dashboards/type";
-import Link from "next/link";
 import { SidebarMenus } from "./sidbar-menu-items";
 
 async function getDashboards(): Promise<Dashboard[]> {

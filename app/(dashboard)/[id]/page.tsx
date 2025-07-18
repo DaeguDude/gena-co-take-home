@@ -1,7 +1,13 @@
 import { Chart } from "@/app/api/charts/type";
 import { Dashboard } from "@/app/api/dashboards/type";
-import { XXChart } from "@/app/components/chart/chart";
+import { BarAndLineChartCard } from "@/app/components/chart/bar-and-line-chart-card";
+import {
+  NumberChartCard,
+  NumberCharts,
+} from "@/app/components/chart/number-chart-card";
 import { Header } from "@/app/components/header";
+import { Card } from "@/components/ui/card";
+import { useMemo } from "react";
 
 async function getCharts(ids?: string[]): Promise<Chart[]> {
   let xxApiPath = "charts";
@@ -54,13 +60,25 @@ export default async function DashboardIdPage({
   const dashboard = await getDashboard(dashboardId);
   const charts = await getCharts(dashboard.charts);
 
+  const numberCharts = charts.filter((c) => c.type === "number");
+  const barAndLineCharts = charts.filter((c) => c.type !== "number");
+
+  const dummyNumberCharts = Array.from({ length: 3 }).map((_, index) => ({
+    ...numberCharts[0],
+    id: `dashboard-${index + 1}`,
+  }));
+
   return (
     <main className="flex flex-col flex-1">
       <Header dashboard={dashboard} />
-      <div className="flex p-4">
-        {charts.map((chart) => (
-          <XXChart key={chart.id} chart={chart} />
-        ))}
+      <div className="p-4">
+        <NumberCharts charts={dummyNumberCharts} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+          {barAndLineCharts.map((chart) => (
+            <BarAndLineChartCard key={chart.id} chart={chart} />
+          ))}
+        </div>
       </div>
     </main>
   );

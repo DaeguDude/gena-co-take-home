@@ -5,7 +5,6 @@ import { Dashboard, Dashboard as TDashboard } from "../api/dashboards/type";
 import { CreateDashboardButton } from "./dashboard/create-dashboard";
 import { useQuery } from "@tanstack/react-query";
 import { Chart } from "../api/charts/type";
-import { XXChart } from "./chart/chart";
 
 async function getCharts(ids?: string[]): Promise<Chart[]> {
   let xxApiPath = "charts";

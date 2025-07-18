@@ -25,7 +25,6 @@ const formSchema = z.object({
   type: z.string(),
 });
 
-// TODO: dataset 변경시 Type 제대로 변경안되는거 고쳐주기
 export function EditChartDialog({
   chart,
   open,
