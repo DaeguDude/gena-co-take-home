@@ -1,6 +1,7 @@
 import { Chart } from "@/app/api/charts/type";
 import { Dashboard } from "@/app/api/dashboards/type";
-import { BarAndLineCharts } from "@/app/components/chart/bar-and-line-chart-card";
+import { BarCharts } from "@/app/components/chart/bar-chart-card";
+import { LineCharts } from "@/app/components/chart/line-chart-card";
 import { NumberCharts } from "@/app/components/chart/number-chart-card";
 import { Header } from "@/app/components/header";
 
@@ -23,7 +24,7 @@ async function getCharts(ids?: string[]): Promise<Chart[]> {
 
   // 응답을 JSON으로 파싱하고 정의된 타입으로 캐스팅
   const data: Chart[] = await res.json();
-  return data;
+  return data.sort((a, b) => a.order - b.order);
 }
 
 async function getDashboard(id: string): Promise<Dashboard> {
@@ -46,6 +47,27 @@ async function getDashboard(id: string): Promise<Dashboard> {
   return data;
 }
 
+function getChartsByType(charts: Chart[]) {
+  const numberCharts = [];
+  const barCharts = [];
+  const lineCharts = [];
+  for (const chart of charts) {
+    switch (chart.type) {
+      case "bar":
+        barCharts.push(chart);
+        break;
+      case "line":
+        lineCharts.push(chart);
+        break;
+      case "number":
+        numberCharts.push(chart);
+        break;
+    }
+  }
+
+  return { numberCharts, barCharts, lineCharts };
+}
+
 export default async function DashboardIdPage({
   params,
 }: {
@@ -53,18 +75,17 @@ export default async function DashboardIdPage({
 }) {
   const dashboardId = (await params).id;
   const dashboard = await getDashboard(dashboardId);
-  console.log("dashboard.charts: ", dashboard.charts);
   const charts = await getCharts(dashboard.charts);
 
-  const numberCharts = charts.filter((c) => c.type === "number");
-  const barAndLineCharts = charts.filter((c) => c.type !== "number");
+  const { numberCharts, barCharts, lineCharts } = getChartsByType(charts);
 
   return (
     <main className="flex flex-col flex-1">
       <Header dashboard={dashboard} />
       <div className="p-4 flex flex-col gap-4">
         <NumberCharts charts={numberCharts} />
-        <BarAndLineCharts charts={barAndLineCharts} />
+        <BarCharts charts={barCharts} />
+        <LineCharts charts={lineCharts} />
       </div>
     </main>
   );
