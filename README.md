@@ -43,7 +43,7 @@ To run the project:
 - Reorder charts on the dashboard (e.g. drag and drop)
 - ~Rename or delete dashboards~
 - ~Responsive or mobile-friendly layout~
-- Dockerization or deployed demo
+- ~Dockerization or deployed demo~: Deployed with Railway
 
 ## 📩 Contacts
 
