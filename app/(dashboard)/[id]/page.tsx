@@ -7,6 +7,11 @@ import { Header } from "@/app/components/header";
 
 async function getCharts(ids?: string[]): Promise<Chart[]> {
   let xxApiPath = "charts";
+
+  if (ids && ids.length === 0) {
+    return [];
+  }
+
   if (ids && ids.length > 0) {
     xxApiPath += `?ids=${ids.join(",")}`;
   }
@@ -54,6 +59,7 @@ export default async function DashboardIdPage({
 }) {
   const dashboardId = (await params).id;
   const dashboard = await getDashboard(dashboardId);
+  console.log("dashboard: ", dashboard);
   const charts = await getCharts(dashboard.charts);
 
   const numberCharts = charts.filter((c) => c.type === "number");
