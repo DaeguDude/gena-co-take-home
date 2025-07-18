@@ -4,7 +4,7 @@ import { revalidateTag } from "next/cache";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
 
@@ -33,7 +33,7 @@ export async function GET(
 // /api/charts/[id] - 차트 지우기
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
 

@@ -4,6 +4,8 @@ Dashboard App for Gena Take home assignment
 
 ## How to run
 
+Take a run from deployed demo: <주소>
+
 - Clone the repository
 - Go to the cloned repository directory and run `npm install`
 - After installed run `npm run dev` to see the working app
@@ -13,7 +15,9 @@ Dashboard App for Gena Take home assignment
 - Next.js, React, Tailwind
 - Shadcn/ui, Recharts, Tanstack-query, date-fns
 
-## Requirements
+## 👉 Result
+
+**Requirements**
 
 - ~You should mock the backend (via /api/ endpoints, JSON server, or other mocking tools)~ : Mocked with /api/endpoints
 - ~A dashboard should consist of one or more charts.~
@@ -26,11 +30,12 @@ Dashboard App for Gena Take home assignment
   - ~Add and configure charts in dashboards~
   - ~Save and return to view dashboards later~
 
-## 🚎 To Be Implemented More
+**Optional / Nice to Have:**
 
-**백엔드**
-
-**Styling**
+- Reorder charts on the dashboard (e.g. drag and drop)
+- ~Rename or delete dashboards~
+- ~Responsive or mobile-friendly layout~
+- Dockerization or deployed demo
 
 ## 📩 연락처
 
