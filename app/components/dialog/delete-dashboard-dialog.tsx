@@ -8,6 +8,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { baseUrl } from "@/lib/constant";
 import { DialogProps } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
 
@@ -24,7 +25,7 @@ export function DeleteDashboardDialog({
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/dashboards/${dashboardId}`, {
+      const response = await fetch(`${baseUrl}/api/dashboards/${dashboardId}`, {
         method: "DELETE",
       });
 

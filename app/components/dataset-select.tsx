@@ -11,6 +11,7 @@ import {
 
 import { DatasetMetadata } from "../api/data/type";
 import { useQuery } from "@tanstack/react-query";
+import { baseUrl } from "@/lib/constant";
 
 export function DatasetSelect({
   value,
@@ -22,7 +23,7 @@ export function DatasetSelect({
   const { data: datasetMetadataList } = useQuery({
     queryKey: ["dataset"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:3000/api/data", {
+      const res = await fetch(`${baseUrl}/api/data`, {
         cache: "no-cache",
       });
 

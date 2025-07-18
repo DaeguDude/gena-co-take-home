@@ -1,5 +1,6 @@
 "use client";
 
+import { baseUrl } from "@/lib/constant";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -15,7 +16,7 @@ export function CreateDashboardButton() {
 
   const handleCreate = async () => {
     try {
-      const response = await fetch(`/api/dashboards`, {
+      const response = await fetch(`${baseUrl}/api/dashboards`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

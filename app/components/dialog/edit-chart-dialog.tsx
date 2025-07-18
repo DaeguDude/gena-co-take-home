@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Chart, ChartType } from "@/app/api/charts/type";
 import { DatasetMetadata } from "@/app/api/data/type";
 import { DialogProps } from "@radix-ui/react-dialog";
+import { baseUrl } from "@/lib/constant";
 
 const formSchema = z.object({
   id: z.string(),
@@ -39,7 +40,7 @@ export function EditChartDialog({
   const { data: datasetMetadata } = useQuery({
     queryKey: ["dataset"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:3000/api/data", {
+      const res = await fetch(`${baseUrl}/api/data`, {
         cache: "no-cache",
       });
 
@@ -86,7 +87,7 @@ export function EditChartDialog({
           type: validated.data.type as ChartType,
         };
 
-        const response = await fetch(`/api/charts`, {
+        const response = await fetch(`${baseUrl}/api/charts`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",

@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Dashboard } from "../../api/dashboards/type";
 import { DialogProps } from "@radix-ui/react-dialog";
+import { baseUrl } from "@/lib/constant";
 
 export function UpdateDashboardDialog({
   dashboard,
@@ -31,13 +32,16 @@ export function UpdateDashboardDialog({
 
   const handleUpdate = async () => {
     try {
-      const response = await fetch(`/api/dashboards/${dashboard.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name }),
-      });
+      const response = await fetch(
+        `${baseUrl}/api/dashboards/${dashboard.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name }),
+        }
+      );
 
       if (!response.ok) {
         const errorData = await response.json();

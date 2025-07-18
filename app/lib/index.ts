@@ -1,3 +1,4 @@
+import { baseUrl } from "@/lib/constant";
 import { Chart } from "../api/charts/type";
 import { Dashboard } from "../api/dashboards/type";
 
@@ -12,7 +13,7 @@ export async function getCharts(ids?: string[]): Promise<Chart[]> {
     xxApiPath += `?ids=${ids.join(",")}`;
   }
 
-  const res = await fetch(`http://localhost:3000/api/${xxApiPath}`, {
+  const res = await fetch(`${baseUrl}/api/${xxApiPath}`, {
     cache: "no-store",
     next: {
       tags: ["charts"],
@@ -29,7 +30,7 @@ export async function getCharts(ids?: string[]): Promise<Chart[]> {
 }
 
 export async function getData(endpoint: string) {
-  const res = await fetch(`http://localhost:3000${endpoint}`, {
+  const res = await fetch(`${baseUrl}${endpoint}`, {
     cache: "no-store",
     next: {
       tags: [`data/${endpoint}`],
@@ -45,7 +46,7 @@ export async function getData(endpoint: string) {
 }
 
 export async function getDashboards(): Promise<Dashboard[]> {
-  const res = await fetch("http://localhost:3000/api/dashboards", {
+  const res = await fetch(`${baseUrl}/api/dashboards`, {
     cache: "no-store",
     next: {
       tags: ["dashboards"],
@@ -64,7 +65,7 @@ export async function getDashboards(): Promise<Dashboard[]> {
 }
 
 export async function getDashboard(id: string): Promise<Dashboard> {
-  const res = await fetch(`http://localhost:3000/api/dashboards/${id}`, {
+  const res = await fetch(`${baseUrl}/api/dashboards/${id}`, {
     cache: "no-store",
     next: {
       tags: [`dashboard-${id}`],
@@ -84,7 +85,7 @@ export async function getDashboard(id: string): Promise<Dashboard> {
 }
 
 export async function getChart(id: string): Promise<Dashboard> {
-  const res = await fetch(`http://localhost:3000/api/charts/${id}`, {
+  const res = await fetch(`${baseUrl}/api/charts/${id}`, {
     cache: "no-store",
     next: {
       tags: [`chart-${id}`],

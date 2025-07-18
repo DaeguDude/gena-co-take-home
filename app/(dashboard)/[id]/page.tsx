@@ -5,9 +5,10 @@ import { NumberChartCard } from "@/app/components/chart/number-chart-card";
 import { Empty } from "@/app/components/dashboard/empty";
 import { Header } from "@/app/components/header";
 import { getCharts } from "@/app/lib";
+import { baseUrl } from "@/lib/constant";
 
 async function getDashboard(id: string): Promise<Dashboard> {
-  const res = await fetch(`http://localhost:3000/api/dashboards/${id}`, {
+  const res = await fetch(`${baseUrl}/api/dashboards/${id}`, {
     cache: "no-store",
     next: {
       tags: [`dashboard-${id}`],

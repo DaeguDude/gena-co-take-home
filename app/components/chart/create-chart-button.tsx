@@ -16,6 +16,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { ChartForm, TChartForm } from "./chart-form";
 import { Chart, ChartType } from "@/app/api/charts/type";
+import { baseUrl } from "@/lib/constant";
 
 const formSchema = z.object({
   title: z.string(),
@@ -62,7 +63,7 @@ export function CreateChartButton({ dashboardId }: { dashboardId: string }) {
           type: validated.data.type as ChartType,
         };
 
-        const response = await fetch(`/api/charts`, {
+        const response = await fetch(`${baseUrl}/api/charts`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

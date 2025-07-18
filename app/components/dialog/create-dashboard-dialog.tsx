@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { DialogProps } from "@radix-ui/react-dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { baseUrl } from "@/lib/constant";
 
 export function CreateDashboardDialog({
   open,
@@ -26,7 +27,7 @@ export function CreateDashboardDialog({
 
   const handleCreate = async () => {
     try {
-      const response = await fetch(`/api/dashboards`, {
+      const response = await fetch(`${baseUrl}/api/dashboards`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

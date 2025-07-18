@@ -8,6 +8,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { baseUrl } from "@/lib/constant";
 import { DialogProps } from "@radix-ui/react-dialog";
 import { useRouter } from "next/navigation";
 
@@ -24,9 +25,7 @@ export function DeleteChartDialog({
 
   const handleDelete = async () => {
     try {
-      // DELETE 요청을 /api/users 엔드포인트로 보냄
-      // 쿼리 파라미터로 userId를 전달
-      const response = await fetch(`/api/charts/${chartId}`, {
+      const response = await fetch(`${baseUrl}/api/charts/${chartId}`, {
         method: "DELETE",
       });
 

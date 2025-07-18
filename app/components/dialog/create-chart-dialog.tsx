@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { ChartForm, TChartForm } from "../chart/chart-form";
 import { Chart, ChartType } from "@/app/api/charts/type";
 import { DialogProps } from "@radix-ui/react-dialog";
+import { baseUrl } from "@/lib/constant";
 
 const formSchema = z.object({
   title: z.string(),
@@ -59,7 +60,7 @@ export function CreateChartDialog({
           type: validated.data.type as ChartType,
         };
 
-        const response = await fetch(`/api/charts`, {
+        const response = await fetch(`${baseUrl}/api/charts`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
