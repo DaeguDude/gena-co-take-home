@@ -2,14 +2,14 @@
 
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
 import { DialogProps } from "@radix-ui/react-dialog";
-import { dashboards } from "../api/dashboards/data";
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
+import { getDashboards } from "../lib";
 
 export function SideSheet({
   open,
@@ -18,6 +18,15 @@ export function SideSheet({
   open: boolean;
   onOpenChange?: DialogProps["onOpenChange"];
 }) {
+  const { data } = useQuery({
+    queryKey: ["dashboards"],
+    queryFn: async () => {
+      return await getDashboards();
+    },
+  });
+
+  const dashboards = data ?? [];
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="top-12" side="left" aria-describedby={undefined}>
