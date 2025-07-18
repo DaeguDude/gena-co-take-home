@@ -1,26 +1,11 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Chart, NumberChartData } from "@/app/api/charts/type";
 import { ChartDropdown } from "./chart-dropdown";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/app/lib";
-import {
-  BadgeDollarSign,
-  Banknote,
-  DollarSign,
-  DollarSignIcon,
-  Flag,
-  RotateCcwSquare,
-  ShoppingCart,
-  WalletCards,
-} from "lucide-react";
+import { Banknote, Flag, RotateCcwSquare, ShoppingCart } from "lucide-react";
 
 export function NumberCharts({ charts }: { charts: Chart[] }) {
   return (

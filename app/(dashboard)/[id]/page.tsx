@@ -1,16 +1,8 @@
 import { Chart } from "@/app/api/charts/type";
 import { Dashboard } from "@/app/api/dashboards/type";
-import {
-  BarAndLineChartCard,
-  BarAndLineCharts,
-} from "@/app/components/chart/bar-and-line-chart-card";
-import {
-  NumberChartCard,
-  NumberCharts,
-} from "@/app/components/chart/number-chart-card";
+import { BarAndLineCharts } from "@/app/components/chart/bar-and-line-chart-card";
+import { NumberCharts } from "@/app/components/chart/number-chart-card";
 import { Header } from "@/app/components/header";
-import { Card } from "@/components/ui/card";
-import { useMemo } from "react";
 
 async function getCharts(ids?: string[]): Promise<Chart[]> {
   let xxApiPath = "charts";
