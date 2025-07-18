@@ -18,7 +18,7 @@ To run the project:
 
 ## 📕 Tech Stacks
 
-- **Frameworks**: Next.js, React, Tailwind
+- **Frameworks**: Next.js, React
 - **Styling**: Shadcn/ui, Tailwind
 - **Charts**: Recharts
 - **Etc**: Tanstack Query, date-fns
