@@ -4,7 +4,7 @@ import { BarChartCard } from "@/app/components/chart/bar-chart-card";
 import { LineChartCard } from "@/app/components/chart/line-chart-card";
 import { NumberChartCard } from "@/app/components/chart/number-chart-card";
 import { Header } from "@/app/components/header";
-import { SheetDemo } from "@/app/components/sheet-demo";
+import { SideSheet } from "@/app/components/side-sheet";
 
 async function getCharts(ids?: string[]): Promise<Chart[]> {
   let xxApiPath = "charts";

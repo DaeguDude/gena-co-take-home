@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CirclePlus, Menu, X } from "lucide-react";
 import { CreateChartDialog } from "./dialog";
-import { SheetDemo } from "./sheet-demo";
+import { SideSheet } from "./side-sheet";
 
 export function Header({ dashboard }: { dashboard: Dashboard }) {
   const [createChartDialogOpen, setCreateChartDialogOpen] = useState(false);
@@ -18,7 +18,6 @@ export function Header({ dashboard }: { dashboard: Dashboard }) {
         <div className="flex flex-1 px-4 justify-between items-center">
           <div className="flex gap-2 items-center">
             <div className="flex items-center md:hidden">
-              {/* 오픈되어있으면... 배경 그레이로 바꾸고 x로 바꿔주기 */}
               <Button
                 variant="outline"
                 size="sm"
@@ -49,7 +48,7 @@ export function Header({ dashboard }: { dashboard: Dashboard }) {
         </div>
       </header>
 
-      {sheetOpen && <SheetDemo open={sheetOpen} onOpenChange={setSheetOpen} />}
+      {sheetOpen && <SideSheet open={sheetOpen} onOpenChange={setSheetOpen} />}
 
       {createChartDialogOpen && (
         <CreateChartDialog
