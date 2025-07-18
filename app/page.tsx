@@ -75,7 +75,7 @@ async function getChart(id: string): Promise<Dashboard> {
  * TODO:
  * - ✅그래프 영역 반응형으로 만들기 ✅
  * - ✅ 더미 데이터 많이 넣어서 화면 꽉 채우기(더미 데이터 중요하지...) ✅
- * - ~ Number graph 조금 더 꾸며주기 ~
+ * - ✅ Number graph 조금 더 꾸며주기 ✅
  * - ‼️ Bar & Line label 제대로 확인 ‼️ 
  * - ‼️ 화면 사이즈 줄어들 때 사이드바 헤더로 옮기는 화면 ‼️
  * - 홈 화면에서 아무것도 선택 안 했을 시 화면

@@ -18,7 +18,9 @@ export function ChartDropdown({ chart }: { chart: Chart }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <EllipsisVertical className="text-gray-400" />
+          <div className="flex items-center justify-center h-[32px] w-[32px] cursor-pointer text-gray-400 hover:text-gray-900">
+            <EllipsisVertical />
+          </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
           <DropdownMenuItem onClick={() => setEditDialogOpen(true)}>
