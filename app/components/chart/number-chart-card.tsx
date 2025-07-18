@@ -1,6 +1,12 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Chart, NumberChartData } from "@/app/api/charts/type";
 import { ChartDropdown } from "./chart-dropdown";
 import { useQuery } from "@tanstack/react-query";
@@ -33,11 +39,12 @@ export function NumberChartCard({ chart }: { chart: Chart }) {
   return (
     <Card className="col-span-12 md:col-span-6 lg:col-span-4">
       <CardHeader>
-        <div className="flex justify-between">
-          <CardTitle>{chart.title}</CardTitle>
+        <div className="flex justify-between items-center">
+          <span className="text-muted-foreground font-semibold">
+            {chart.title}
+          </span>
           <ChartDropdown chart={chart} />
         </div>
-        {/* <CardDescription>January - June 2024</CardDescription> */}
       </CardHeader>
       <CardContent className="flex items-center justify-center">
         <span className="font-bold">{chartDataResponse.data.value}</span>
