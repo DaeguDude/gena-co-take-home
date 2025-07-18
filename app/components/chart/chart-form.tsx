@@ -27,10 +27,7 @@ export function ChartForm({
     }
   };
   const handleChangeDataset = (dataset: DatasetMetadata) => {
-    console.log("dataset.supportedChartTypes: ", dataset.supportedChartTypes);
-    // 바뀔때 현재 선택된 타입이 unsupported type이면.. 후려치자.
     let chartType = form.chartType;
-    console.log("chartType: ", chartType);
     if (chartType && !dataset.supportedChartTypes.includes(chartType)) {
       chartType = undefined;
     }
@@ -49,8 +46,6 @@ export function ChartForm({
         chartType,
       });
   };
-
-  console.log("form:", form);
 
   return (
     <div className="grid gap-4">
