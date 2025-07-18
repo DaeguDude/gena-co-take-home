@@ -14,6 +14,9 @@ import { useMemo } from "react";
 import { ChartDropdown } from "./chart-dropdown";
 import { getData } from "@/app/lib";
 import { useQuery } from "@tanstack/react-query";
+import { isYYYYMMDD } from "@/lib/utils";
+import { format } from "date-fns";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export function BarAndLineCharts({ charts }: { charts: Chart[] }) {
   return (
@@ -78,8 +81,10 @@ export function BarAndLineChart({
     [data]
   );
 
+  const mobile = useIsMobile();
+
   return (
-    <Card className="col-span-12">
+    <Card className="col-span-12 xl:col-span-6">
       <CardHeader>
         <div className="flex justify-between">
           <CardTitle className="text-xl">{chart.title}</CardTitle>
@@ -88,21 +93,43 @@ export function BarAndLineChart({
         {/* <CardDescription>January - June 2024</CardDescription> */}
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
+        {/* NOTE: min-h-[value] is required: https://ui.shadcn.com/docs/components/chart */}
+        <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
           <BarChart accessibilityLayer data={transformedChartData}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="label"
               tickLine={false}
-              tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              minTickGap={mobile ? 2 : 4}
+              tickMargin={8}
+              // yyyy-MM-dd 포맷이라면 포맷팅.
+              tickFormatter={(value) => {
+                const isDateFormat = isYYYYMMDD(value);
+                if (isDateFormat) {
+                  return format(new Date(value), "MMM d");
+                } else {
+                  return mobile ? value.slice(0, 3) : value;
+                }
+              }}
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={
+                <ChartTooltipContent
+                  labelFormatter={(value) => {
+                    // date라면... 포매팅하기
+                    return value;
+                  }}
+                />
+              }
             />
-            <Bar dataKey="value" fill="var(--color-desktop)" radius={8} />
+            <Bar
+              dataKey="value"
+              fill="var(--color-desktop)"
+              radius={8}
+              barSize={40}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>

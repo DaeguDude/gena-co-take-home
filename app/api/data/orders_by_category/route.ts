@@ -5,7 +5,7 @@ export async function GET() {
     labels: [
       "Electronics",
       "Clothing",
-      "Home & Kitchen",
+      "Kitchen",
       "Books",
       "Sports",
       "Beauty",
