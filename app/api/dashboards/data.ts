@@ -11,7 +11,7 @@ export function getNewDashboardId() {
 export let dashboards: Dashboard[] = [
   {
     id: getNewDashboardId(),
-    name: "일일 매출 현황판",
+    name: "Dashboard-1",
     charts: [
       "chart-1",
       "chart-2",
@@ -27,13 +27,13 @@ export let dashboards: Dashboard[] = [
   },
   {
     id: getNewDashboardId(),
-    name: "마케팅 캠페인 대시보드",
-    charts: ["c-m01", "c-m02"], // marketing_chart_01, marketing_chart_02
+    name: "Dashboard-2",
+    charts: [],
   },
   {
     id: getNewDashboardId(),
-    name: "운영 효율성 모니터링",
-    charts: ["c-o01"], // operation_chart_01
+    name: "Dashboard-3",
+    charts: [],
   },
 ];
 
