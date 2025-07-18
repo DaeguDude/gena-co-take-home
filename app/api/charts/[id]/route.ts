@@ -22,7 +22,7 @@ export async function GET(
         { status: 404 }
       );
     }
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { message: "INTERNAL SERVER ERROR" },
       { status: 500 }
@@ -57,7 +57,7 @@ export async function DELETE(
         { status: 404 }
       );
     }
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { message: "INTERNAL SERVER ERROR" },
       { status: 500 }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { charts, getNewChartId, getNewOrder } from "./data";
-import { Chart, ChartType } from "./type";
-import { revalidatePath, revalidateTag } from "next/cache";
+import { Chart } from "./type";
+import { revalidateTag } from "next/cache";
 import { dashboards } from "../dashboards/data";
 
 export function GET(request: NextRequest) {
@@ -18,7 +18,7 @@ export function GET(request: NextRequest) {
     }
 
     return NextResponse.json(result);
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       {
         message: "Internal server error",
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
     revalidateTag(`${chartForm.dashboardId}`);
     revalidateTag("charts");
     return NextResponse.json(charts);
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { message: "INTERNAL SERVER ERROR" },
       { status: 500 }
@@ -138,7 +138,7 @@ export async function PUT(request: NextRequest) {
     revalidateTag("charts");
     revalidateTag("dashboards");
     return NextResponse.json(charts);
-  } catch (err) {
+  } catch {
     return NextResponse.json(
       { message: "INTERNAL SERVER ERROR" },
       { status: 500 }

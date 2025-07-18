@@ -3,7 +3,7 @@ import { dashboards, getNewDashboardId } from "./data";
 import { Dashboard } from "./type";
 import { revalidateTag } from "next/cache";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   return NextResponse.json(dashboards);
 }
 
