@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   const data = {
-    labels: ["North America", "Europe", "Asia", "South America", "Africa"],
-    values: [120, 95, 180, 150, 100],
+    labels: ["Mobile", "Tablet", "Laptop", "Desktop", "TV"],
+    values: [420, 530, 160, 110, 90],
   };
 
   return NextResponse.json(data);

@@ -9,8 +9,33 @@ export function GET() {
       supportedChartTypes: ["bar", "line"],
     },
     {
+      endpoint: "/api/data/revenues_over_time",
+      name: "revenues_over_time",
+      supportedChartTypes: ["bar", "line"],
+    },
+    {
+      endpoint: "/api/data/visits_over_time",
+      name: "visits_over_time",
+      supportedChartTypes: ["bar", "line"],
+    },
+    {
       endpoint: "/api/data/signups_by_region",
       name: "signups_by_region",
+      supportedChartTypes: ["bar", "line"],
+    },
+    {
+      endpoint: "/api/data/users_by_device",
+      name: "users_by_device",
+      supportedChartTypes: ["bar", "line"],
+    },
+    {
+      endpoint: "/api/data/orders_by_category",
+      name: "orders_by_category",
+      supportedChartTypes: ["bar", "line"],
+    },
+    {
+      endpoint: "/api/data/revenue_by_month",
+      name: "revenue_by_month",
       supportedChartTypes: ["bar", "line"],
     },
     {

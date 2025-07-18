@@ -12,7 +12,18 @@ export let dashboards: Dashboard[] = [
   {
     id: getNewDashboardId(),
     name: "일일 매출 현황판",
-    charts: ["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"], // sales_chart_01, sales_chart_02, product_chart_01
+    charts: [
+      "chart-1",
+      "chart-2",
+      "chart-3",
+      "chart-4",
+      "chart-5",
+      "chart-6",
+      "chart-7",
+      "chart-8",
+      "chart-9",
+      "chart-10",
+    ], // sales_chart_01, sales_chart_02, product_chart_01
   },
   {
     id: getNewDashboardId(),
