@@ -23,7 +23,7 @@ export let dashboards: Dashboard[] = [
       "chart-8",
       "chart-9",
       "chart-10",
-    ], // sales_chart_01, sales_chart_02, product_chart_01
+    ],
   },
   {
     id: getNewDashboardId(),
