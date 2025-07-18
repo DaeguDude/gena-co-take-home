@@ -52,6 +52,9 @@ export default async function DashboardIdPage({
             {numberCharts.map((c) => (
               <NumberChartCard key={c.id} chart={c} />
             ))}
+          </div>
+
+          <div className="grid grid-cols-12 gap-4">
             {nonNumberCharts.map((chart) => {
               if (chart.type === "bar") {
                 return <BarChartCard key={chart.id} chart={chart} />;

@@ -1,21 +1,27 @@
 # 💬 Dashboard App
 
-Dashboard App for Gena Take home assignment
+A Dashboard App for the Gena take-home assignment
+
+## 📺 Demo
+
+<img src='demo.gif' width={500} height={500} alt='gena demo'>
 
 ## How to run
 
-Take a run from deployed demo: <주소>
+To run the project:
 
-- Clone the repository
-- Go to the cloned repository directory and run `npm install`
-- After installed run `npm run dev` to see the working app
+- Clone this repository
+- Navigate to the cloned repository and run `npm install`
+- After installed, start the server by `npm run dev`
 
-## 📕 Stacks
+## 📕 Tech Stacks
 
-- Next.js, React, Tailwind
-- Shadcn/ui, Recharts, Tanstack-query, date-fns
+- **Frameworks**: Next.js, React, Tailwind
+- **Styling**: Shadcn/ui, Tailwind
+- **Charts**: Recharts
+- **Etc**: Tanstack Query, date-fns
 
-## 👉 Result
+## 👉 Features
 
 **Requirements**
 
@@ -37,6 +43,7 @@ Take a run from deployed demo: <주소>
 - ~Responsive or mobile-friendly layout~
 - Dockerization or deployed demo
 
-## 📩 연락처
+## 📩 Contacts
 
-k3hppk@gmail.com
+- 📪 k3hppk@gmail.com
+- 📞 +82 1049931290
