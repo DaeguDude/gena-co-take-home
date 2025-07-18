@@ -1,6 +1,9 @@
 import { Chart } from "@/app/api/charts/type";
 import { Dashboard } from "@/app/api/dashboards/type";
-import { BarAndLineChartCard } from "@/app/components/chart/bar-and-line-chart-card";
+import {
+  BarAndLineChartCard,
+  BarAndLineCharts,
+} from "@/app/components/chart/bar-and-line-chart-card";
 import {
   NumberChartCard,
   NumberCharts,
@@ -71,14 +74,9 @@ export default async function DashboardIdPage({
   return (
     <main className="flex flex-col flex-1">
       <Header dashboard={dashboard} />
-      <div className="p-4">
+      <div className="p-4 flex flex-col gap-4">
         <NumberCharts charts={dummyNumberCharts} />
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-          {barAndLineCharts.map((chart) => (
-            <BarAndLineChartCard key={chart.id} chart={chart} />
-          ))}
-        </div>
+        <BarAndLineCharts charts={barAndLineCharts} />
       </div>
     </main>
   );

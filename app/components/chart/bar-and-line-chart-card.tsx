@@ -1,15 +1,8 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -21,6 +14,16 @@ import { useMemo } from "react";
 import { ChartDropdown } from "./chart-dropdown";
 import { getData } from "@/app/lib";
 import { useQuery } from "@tanstack/react-query";
+
+export function BarAndLineCharts({ charts }: { charts: Chart[] }) {
+  return (
+    <div className="grid grid-cols-12 gap-4">
+      {charts.map((c) => (
+        <BarAndLineChartCard key={c.id} chart={c} />
+      ))}
+    </div>
+  );
+}
 
 export function BarAndLineChartCard({ chart }: { chart: Chart }) {
   const { data: chartDataResponse } = useQuery({
@@ -76,7 +79,7 @@ export function BarAndLineChart({
   );
 
   return (
-    <Card>
+    <Card className="col-span-12">
       <CardHeader>
         <div className="flex justify-between">
           <CardTitle>{chart.title}</CardTitle>
