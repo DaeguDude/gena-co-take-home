@@ -11,6 +11,16 @@ import { Chart, NumberChartData } from "@/app/api/charts/type";
 import { ChartDropdown } from "./chart-dropdown";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/app/lib";
+import {
+  BadgeDollarSign,
+  Banknote,
+  DollarSign,
+  DollarSignIcon,
+  Flag,
+  RotateCcwSquare,
+  ShoppingCart,
+  WalletCards,
+} from "lucide-react";
 
 export function NumberCharts({ charts }: { charts: Chart[] }) {
   return (
@@ -20,6 +30,19 @@ export function NumberCharts({ charts }: { charts: Chart[] }) {
       ))}
     </div>
   );
+}
+
+function getIcon(endPoint: string) {
+  switch (endPoint) {
+    case "/api/data/total_revenue":
+      return Banknote;
+    case "/api/data/total_orders":
+      return ShoppingCart;
+    case "/api/data/refund_count":
+      return RotateCcwSquare;
+    default:
+      return Flag;
+  }
 }
 
 export function NumberChartCard({ chart }: { chart: Chart }) {
@@ -36,18 +59,25 @@ export function NumberChartCard({ chart }: { chart: Chart }) {
 
   if (!chartDataResponse) return null;
 
+  const Icon = getIcon(chart.dataEndPoint);
+
   return (
     <Card className="col-span-12 md:col-span-6 lg:col-span-4">
       <CardHeader>
         <div className="flex justify-between items-center">
-          <span className="text-muted-foreground font-semibold">
-            {chart.title}
-          </span>
+          <div className="h-[48px] w-[48px] rounded-xl bg-gray-100 flex items-center justify-center">
+            <Icon strokeWidth={1.5} />
+          </div>
           <ChartDropdown chart={chart} />
         </div>
       </CardHeader>
-      <CardContent className="flex items-center justify-center">
-        <span className="font-bold">{chartDataResponse.data.value}</span>
+      <CardContent className="flex flex-col gap-1">
+        <span className="text-muted-foreground font-semibold">
+          {chart.title}
+        </span>
+        <span className="text-3xl font-bold">
+          {chartDataResponse.data.value.toLocaleString()}
+        </span>
       </CardContent>
     </Card>
   );
