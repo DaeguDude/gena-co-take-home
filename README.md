@@ -15,7 +15,7 @@ Dashboard App for Gena Take home assignment
 
 ## Requirements
 
-- [x] You should mock the backend (via /api/ endpoints, JSON server, or other mocking tools)
+- ~You should mock the backend (via /api/ endpoints, JSON server, or other mocking tools)~
 - A dashboard should consist of one or more charts.
 - A chart can be one of:
   - A single number (e.g., total revenue)
