@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -7,7 +9,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { CirclePlus } from "lucide-react";
 import { useState } from "react";
@@ -15,7 +16,6 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { ChartForm, TChartForm } from "./chart-form";
 import { Chart, ChartType } from "@/app/api/charts/type";
-import { DialogProps } from "@radix-ui/react-dialog";
 
 const formSchema = z.object({
   title: z.string(),

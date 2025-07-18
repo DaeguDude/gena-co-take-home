@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CirclePlus, Menu, X } from "lucide-react";
 import { CreateChartDialog } from "./dialog";
 import { SideSheet } from "./side-sheet";
+import { cn } from "@/lib/utils";
 
 export function Header({ dashboard }: { dashboard: Dashboard }) {
   const [createChartDialogOpen, setCreateChartDialogOpen] = useState(false);
@@ -14,7 +15,12 @@ export function Header({ dashboard }: { dashboard: Dashboard }) {
 
   return (
     <>
-      <header className="sticky top-0 z-52 bg-white min-h-[48px] h-[48px] flex items-center border-gray-200 border-1">
+      <header
+        className={cn(
+          "sticky top-0 z-1 bg-white min-h-[48px] h-[48px] flex items-center border-gray-200 border-1",
+          sheetOpen ? "z-51" : undefined
+        )}
+      >
         <div className="flex flex-1 px-4 justify-between items-center">
           <div className="flex gap-2 items-center">
             <div className="flex items-center md:hidden">

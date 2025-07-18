@@ -3,6 +3,11 @@ import { Dashboard } from "../api/dashboards/type";
 
 export async function getCharts(ids?: string[]): Promise<Chart[]> {
   let xxApiPath = "charts";
+
+  if (ids && ids.length === 0) {
+    return [];
+  }
+
   if (ids && ids.length > 0) {
     xxApiPath += `?ids=${ids.join(",")}`;
   }
@@ -20,7 +25,7 @@ export async function getCharts(ids?: string[]): Promise<Chart[]> {
 
   // 응답을 JSON으로 파싱하고 정의된 타입으로 캐스팅
   const data: Chart[] = await res.json();
-  return data;
+  return data.sort((a, b) => a.order - b.order);
 }
 
 export async function getData(endpoint: string) {
@@ -55,5 +60,45 @@ export async function getDashboards(): Promise<Dashboard[]> {
 
   // 응답을 JSON으로 파싱하고 정의된 타입으로 캐스팅
   const data: Dashboard[] = await res.json();
+  return data;
+}
+
+export async function getDashboard(id: string): Promise<Dashboard> {
+  const res = await fetch(`http://localhost:3000/api/dashboards/${id}`, {
+    cache: "no-store",
+    next: {
+      tags: [`dashboard-${id}`],
+    },
+  });
+
+  if (res.status === 404) {
+    throw new Error(`대시보드 (ID: ${id})를 찾을 수 없어.`);
+  }
+
+  if (!res.ok) {
+    throw new Error(`대시보드 (ID: ${id}) 데이터를 가져오는데 실패.`);
+  }
+
+  const data: Dashboard = await res.json();
+  return data;
+}
+
+export async function getChart(id: string): Promise<Dashboard> {
+  const res = await fetch(`http://localhost:3000/api/charts/${id}`, {
+    cache: "no-store",
+    next: {
+      tags: [`chart-${id}`],
+    },
+  });
+
+  if (res.status === 404) {
+    throw new Error(`대시보드 (ID: ${id})를 찾을 수 없어.`);
+  }
+
+  if (!res.ok) {
+    throw new Error(`대시보드 (ID: ${id}) 데이터를 가져오는데 실패.`);
+  }
+
+  const data: Dashboard = await res.json();
   return data;
 }

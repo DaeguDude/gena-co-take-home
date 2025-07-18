@@ -33,6 +33,8 @@ export function DashboardHeaderDropdown({
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
+            // TODO: Should change the logic to not delete when there's only one dashboard left
+            disabled={dashboard.id === "dashboard-1"}
             onClick={() => setDeleteDialogOpen(true)}
             variant="destructive"
           >
