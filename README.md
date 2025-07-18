@@ -4,6 +4,8 @@ A Dashboard App for the Gena take-home assignment
 
 ## 📺 Demo
 
+- [Public Demo](https://gena-co-take-home-production.up.railway.app/)
+
 <img src='demo.gif' width={500} height={500} alt='gena demo'>
 
 ## How to run
