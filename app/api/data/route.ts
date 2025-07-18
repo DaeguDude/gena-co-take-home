@@ -18,6 +18,16 @@ export function GET() {
       name: "total_revenue",
       supportedChartTypes: ["number"],
     },
+    {
+      endpoint: "/api/data/total_orders",
+      name: "total_orders",
+      supportedChartTypes: ["number"],
+    },
+    {
+      endpoint: "/api/data/refund_count",
+      name: "refund_count",
+      supportedChartTypes: ["number"],
+    },
   ];
 
   return NextResponse.json(dataset);

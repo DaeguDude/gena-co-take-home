@@ -34,9 +34,25 @@ export let charts: Chart[] = [
     id: getNewChartId(),
     dashboardId: "dashboard-1",
     type: "number",
-    title: "현재 총 수익",
+    title: "Total Revenue",
     dataEndPoint: "/api/data/total_revenue",
     order: 3,
+  },
+  {
+    id: getNewChartId(),
+    dashboardId: "dashboard-1",
+    type: "number",
+    title: "Total Orders",
+    dataEndPoint: "/api/data/total_orders",
+    order: 4,
+  },
+  {
+    id: getNewChartId(),
+    dashboardId: "dashboard-1",
+    type: "number",
+    title: "Refund Count",
+    dataEndPoint: "/api/data/refund_count",
+    order: 5,
   },
 ];
 

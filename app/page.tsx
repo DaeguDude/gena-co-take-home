@@ -73,11 +73,12 @@ async function getChart(id: string): Promise<Dashboard> {
 // SIDEBAR BREAKPOINT: 768px
 /**
  * TODO:
+ * - ✅그래프 영역 반응형으로 만들기✅
  * - ‼️ 더미 데이터 많이 넣어서 화면 꽉 채우기(더미 데이터 중요하지...) ‼️
- * - 홈 화면에서 아무것도 선택 안 했을 시 화면
  * - ‼️ 화면 사이즈 줄어들 때 사이드바 헤더로 옮기는 화면 ‼️
- * - ‼️ 그래프 영역 반응형으로 만들기 ‼️
- * - 그래프 label 제대로 안 나타나는 거 고치기
+ * - ‼️ Number graph 조금 더 꾸며주기 ‼️
+ * - ‼️ Bar & Line label 제대로 확인 ‼️ 
+ * - 홈 화면에서 아무것도 선택 안 했을 시 화면
  * - chartdialog dataset 변경시 chart Type 제대로 변경안되는거 고쳐주기
  * - delete dashboard 고치기(// TODO: 대시보드리스트에서 불러와서 알맞은 곳으로 라우팅
       // TODO: 대시보드가 1개 밖에 없다면 삭제할 수 없게 처리)

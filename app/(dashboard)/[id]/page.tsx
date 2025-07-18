@@ -61,21 +61,17 @@ export default async function DashboardIdPage({
 }) {
   const dashboardId = (await params).id;
   const dashboard = await getDashboard(dashboardId);
+  console.log("dashboard.charts: ", dashboard.charts);
   const charts = await getCharts(dashboard.charts);
 
   const numberCharts = charts.filter((c) => c.type === "number");
   const barAndLineCharts = charts.filter((c) => c.type !== "number");
 
-  const dummyNumberCharts = Array.from({ length: 3 }).map((_, index) => ({
-    ...numberCharts[0],
-    id: `dashboard-${index + 1}`,
-  }));
-
   return (
     <main className="flex flex-col flex-1">
       <Header dashboard={dashboard} />
       <div className="p-4 flex flex-col gap-4">
-        <NumberCharts charts={dummyNumberCharts} />
+        <NumberCharts charts={numberCharts} />
         <BarAndLineCharts charts={barAndLineCharts} />
       </div>
     </main>
