@@ -47,10 +47,10 @@ export function NumberChartCard({ chart }: { chart: Chart }) {
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-1">
-        <span className="text-muted-foreground font-semibold">
+        <span className="text-sm text-muted-foreground font-semibold">
           {chart.title}
         </span>
-        <span className="text-3xl font-bold">
+        <span className="text-xl font-bold">
           {chartDataResponse.data.value.toLocaleString()}
         </span>
       </CardContent>
