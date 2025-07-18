@@ -1,8 +1,8 @@
 import { Chart } from "@/app/api/charts/type";
 import { Dashboard } from "@/app/api/dashboards/type";
-import { BarCharts } from "@/app/components/chart/bar-chart-card";
-import { LineCharts } from "@/app/components/chart/line-chart-card";
-import { NumberCharts } from "@/app/components/chart/number-chart-card";
+import { BarChartCard } from "@/app/components/chart/bar-chart-card";
+import { LineChartCard } from "@/app/components/chart/line-chart-card";
+import { NumberChartCard } from "@/app/components/chart/number-chart-card";
 import { Header } from "@/app/components/header";
 
 async function getCharts(ids?: string[]): Promise<Chart[]> {
@@ -47,27 +47,6 @@ async function getDashboard(id: string): Promise<Dashboard> {
   return data;
 }
 
-function getChartsByType(charts: Chart[]) {
-  const numberCharts = [];
-  const barCharts = [];
-  const lineCharts = [];
-  for (const chart of charts) {
-    switch (chart.type) {
-      case "bar":
-        barCharts.push(chart);
-        break;
-      case "line":
-        lineCharts.push(chart);
-        break;
-      case "number":
-        numberCharts.push(chart);
-        break;
-    }
-  }
-
-  return { numberCharts, barCharts, lineCharts };
-}
-
 export default async function DashboardIdPage({
   params,
 }: {
@@ -77,15 +56,25 @@ export default async function DashboardIdPage({
   const dashboard = await getDashboard(dashboardId);
   const charts = await getCharts(dashboard.charts);
 
-  const { numberCharts, barCharts, lineCharts } = getChartsByType(charts);
+  const numberCharts = charts.filter((c) => c.type === "number");
+  const nonNumberCharts = charts.filter((c) => c.type !== "number");
 
   return (
     <main className="flex flex-col flex-1">
       <Header dashboard={dashboard} />
       <div className="p-4 flex flex-col gap-4">
-        <NumberCharts charts={numberCharts} />
-        <BarCharts charts={barCharts} />
-        <LineCharts charts={lineCharts} />
+        <div className="grid grid-cols-12 gap-4">
+          {numberCharts.map((c) => (
+            <NumberChartCard key={c.id} chart={c} />
+          ))}
+          {nonNumberCharts.map((chart) => {
+            if (chart.type === "bar") {
+              return <BarChartCard key={chart.id} chart={chart} />;
+            } else if (chart.type === "line") {
+              return <LineChartCard key={chart.id} chart={chart} />;
+            }
+          })}
+        </div>
       </div>
     </main>
   );

@@ -18,16 +18,6 @@ import { isYYYYMMDD } from "@/lib/utils";
 import { format } from "date-fns";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-export function BarCharts({ charts }: { charts: Chart[] }) {
-  return (
-    <div className="grid grid-cols-12 gap-4">
-      {charts.map((c) => (
-        <BarChartCard key={c.id} chart={c} />
-      ))}
-    </div>
-  );
-}
-
 export function BarChartCard({ chart }: { chart: Chart }) {
   const { data: chartDataResponse } = useQuery({
     queryKey: [chart.id, chart.dataEndPoint],

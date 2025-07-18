@@ -7,16 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 import { getData } from "@/app/lib";
 import { Banknote, Flag, RotateCcwSquare, ShoppingCart } from "lucide-react";
 
-export function NumberCharts({ charts }: { charts: Chart[] }) {
-  return (
-    <div className="grid grid-cols-12 gap-4">
-      {charts.map((c) => (
-        <NumberChartCard key={c.id} chart={c} />
-      ))}
-    </div>
-  );
-}
-
 function getIcon(endPoint: string) {
   switch (endPoint) {
     case "/api/data/total_revenue":
